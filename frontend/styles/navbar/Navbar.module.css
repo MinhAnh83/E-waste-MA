@@ -1,0 +1,14 @@
+
+.nav-link-cus:hover {
+    color: blueviolet !important;
+}
+.nav-link-try:hover {
+    background-color: blueviolet !important;
+    color: rgb(255, 247, 247) !important;
+  
+}
+.nav-link-try{
+    color: white !important;
+    border-radius: 5px !important;
+}
+

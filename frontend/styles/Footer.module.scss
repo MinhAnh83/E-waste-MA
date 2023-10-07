@@ -1,0 +1,27 @@
+.footer{
+   background-color: #f8faff; 
+   padding-top: 25px;
+
+}
+.linkFooter{
+   text-decoration: none;
+   padding: 10px;
+   color: gray;
+   margin-left: -10px;
+
+}
+.linkFooter:hover{
+   text-decoration: dotted;
+ 
+   color: rgb(0, 0, 0);
+   
+}
+.linkGroup{
+   text-decoration: none;
+   list-style-type: none;
+   margin-left: -20px;
+}
+.iconbrand:hover{
+   color:rgb(124, 115, 115);
+   cursor: pointer;;
+}

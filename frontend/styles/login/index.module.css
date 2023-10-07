@@ -1,0 +1,41 @@
+.labelLogin{
+    padding-bottom: 7px;
+    font-family: Courier, monospace;
+}
+
+.cardTitle{
+    background: linear-gradient(to right, #52b788,#3a86ff);
+    -webkit-background-clip: text;
+    color: transparent;
+    font-weight: 700;
+    margin-left: 2px; 
+    text-align: center;
+    font-size: 50px;
+}
+.btnLogin{
+    background: linear-gradient(to right, #52b788,#3a86ff);
+}
+.btnLogin:hover{
+    background: linear-gradient(to right, #3a86ff,#52b788);
+}
+.cardTitleR{
+    background: linear-gradient(to right, #52b788,#3a86ff);
+    -webkit-background-clip: text;
+    color: transparent;
+    font-weight: 700;
+  
+}
+select.select {
+    padding: 8px;
+}
+.btnRegister{
+    background: linear-gradient(to right, #52b788,#3a86ff);
+    padding: 10px;
+    border: none;
+    border-radius: 7px;
+    color: white;
+    font-size: 20px;
+}
+.btnRegister:hover{
+    background: linear-gradient(to right, #3a86ff,#52b788);
+}

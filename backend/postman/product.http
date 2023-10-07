@@ -1,0 +1,17 @@
+### POST product
+POST http://localhost:3000/api/product
+content-type: application/json
+
+
+### Post Products
+POST  http://localhost:3000/api/product
+content-type: application/json
+
+{
+    "ProductID": "1",
+    "CategoryID": "Áo",
+    "Name": "Veston for Business",
+    "Description": "red",
+    "Price": "110 $"
+}
+

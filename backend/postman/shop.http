@@ -1,0 +1,25 @@
+### POST Shop
+POST http://localhost:3000/api/shop
+content-type: application/json
+
+{
+    "username": "mango",
+    "password": "123456",
+    "shopname": "Mango Shop",
+    "address": "123 DHT",
+    "role": "admin"
+}
+
+### POST Login Shop
+POST http://localhost:3000/api/shop/login
+content-type: application/json
+
+{
+    "username": "mango",
+    "password": "123456"
+}
+
+### GET Authen Shop
+GET http://localhost:3000/api/shop/authen
+Content-Type: application/json
+authorization-shop: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJtYW5nbyIsInBhc3N3b3JkIjoiMTIzNDU2IiwiaWF0IjoxNjk0MzIxMTg1fQ.JNxKXEib3lFy0PTtJeHfzCAgWiNkgqs7kxNt8_kdVTQ

@@ -1,0 +1,18 @@
+### POST Create customer
+POST http://localhost:3000/api/customer/signup
+content-type: application/json
+
+{
+    "email": "mang2o@gmail.com",
+    "password": "123456",
+    "fullname": "Mango Shop"
+}
+
+### POST Login customer
+POST http://localhost:3000/api/customer/login
+content-type: application/json
+
+{
+    "email": "mang2o@gmail.com",
+    "password": "123456"
+}
