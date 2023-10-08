@@ -1,6 +1,5 @@
 'use strict'
-const { products } = require('../data')
-const JWT = require('jsonwebtoken')
+
 const RoleModel = require('../model/role.repo')
 
 class RoleController {

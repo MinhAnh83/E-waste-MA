@@ -7,8 +7,8 @@ const RoleRouter=require('./role.router')
 const UserRouter=require('./user.router')
 
 router.use('/product', ProductRouter);
-router.use('/customer', CustomerRouter);
+router.use('/customer', UserRouter);
 router.use('/shop', ShopRouter);
 router.use('/role', RoleRouter);
-router.use('/user', UserRouter);
+// router.use('/user', UserRouter);
 module.exports = router;

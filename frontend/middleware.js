@@ -5,7 +5,7 @@ export function middleware(request) {
   let cookie =request.cookies.get('vechaitoken')
   if(!cookie || !cookie.value) return NextResponse.redirect(new URL('/login', request.url))
   const {name,value}=cookie
-  console.log('Cookiee::',cookie)
+  console.log('Cookiee:::',cookie)
   //name la ten 'vechaitoken', value la token
   fetch(process.env['SERVERHOST']+'/api/customer/authen',{
     method:'GET',
@@ -14,7 +14,9 @@ export function middleware(request) {
     },
   }).then(response=>response.json())
   .then((data)=>{
-    //console.log('Data::',data )
+    console.log('Data:::',data )
+    const {customerId, customerEmail, customerRole} = data
+    Axios.defaults.headers.common['authorization'] = value;
   }).catch((err)=>{
     console.log(err)
   })

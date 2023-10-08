@@ -4,10 +4,10 @@ import Image from 'next/image'
 import { Inter } from 'next/font/google'
 import styles from '@/styles/login/index.module.css'
 import Script from 'next/script'
-import Axios from '@/helper/axios.helper'
+import axios from 'axios'
 import "bootstrap/dist/css/bootstrap.min.css";
 import Navbarhome from '@/components/Navbarhome'
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import {
     Button,
     Card,
@@ -36,7 +36,7 @@ import {
 const inter = Inter({ subsets: ['latin'] })
 
 export async function getStaticProps() {
-    Axios.get('/api/product').then(res => {
+    axios.get('/api/product').then(res => {
 
         const { data } = res.data;
         // data nay la dat tren shopcontroller
@@ -50,15 +50,24 @@ export async function getStaticProps() {
     };
 }
 
+
 export default function Home({ data }) {
-    const [customer, setCustomer] = useState({
-        email: '',
-        password: '',
-        fullname: ''
-    })
+    const [customer, setCustomer] = useState({  })
+    const[roles,setRoles]=useState([])
     const handle = () => {
         window.alert('test nè')
     }
+    useEffect(()=>{
+        axios.get('/api/role').then((response)=>{
+            const {data} =response
+            console.log(data)
+            setRoles(data.data)
+
+        })
+     return()=>{
+    
+     }  
+    },[])
     const onHandleSignup = (e) => {
         e.preventDefault()
         Axios.post('/api/signup/', {
@@ -154,12 +163,34 @@ export default function Home({ data }) {
                                                         <Col>
                                                             <div class="col-md-6 mb-4" style={{ marginBottom:'10px'}}>
                                                                 <label className={styles.labelLogin} for="form3Example4cd" style={{ paddingBottom: '5px', marginLeft: '14px' }}>Vai trò</label>
-                                                                <select className="select" style={{ marginLeft: '10px',padding: '8px' }}>
-                                                                    <option value="1" >Người mua</option>
+                                                                {/* <select className="select" style={{ marginLeft: '10px',padding: '8px' }} onChange={(e)=>{}}>
+                                                                    {roles.map((role,index)=>{
+                                                                        return (
+                                                                            <option value={role.role_id}>{role.name}</option>
+                                                                        )
+                                                                    })}
+                                                                  
                                                                     <option value="2">Người bán</option>
                                                                     <option value="3">Chủ vựa</option>
 
-                                                                </select>
+                                                                </select> */}
+                                                                 {
+          (roles.length > 0) ? (
+            <select name="user" id="user" 
+              onChange={(e) => setCustomer({
+                ...customer,
+                role_id: e.target.value ? parseInt(e.target.value) : e.target.value
+              })}
+              style={{ border: '1px solid #dee2e6a3', width: '150px', height: '36px', borderRadius: '6px', color: 'GrayText' }}>
+              <option value=''>-Chọn Vai Trò-</option>
+            {
+              roles.map((role, index) => {
+                return <option key={index} value={ role.role_id }>{ role.name }</option>
+              })
+            }
+          </select>
+          ) : 'Loading...'
+        }
 
                                                             </div>
 

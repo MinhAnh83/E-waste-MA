@@ -34,7 +34,7 @@ class RoleModel {
         })
     }
     static initTableToDB = async () => {
-        var sql = 'CREATE TABLE IF NOT EXISTS roles (RoleID INT NOT NULL AUTO_INCREMENT PRIMARY KEY,name VARCHAR(255)  NOT NULL,  description TEXT,  accessApp VARCHAR(255)  NOT NULL)';
+        var sql = 'CREATE TABLE IF NOT EXISTS roles (role_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,name VARCHAR(255)  NOT NULL,  description TEXT,  accessApp VARCHAR(255)  NOT NULL)';
         return con.querySync(sql);
     }
 

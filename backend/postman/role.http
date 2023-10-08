@@ -1,0 +1,14 @@
+### GET roles
+GET http://localhost:8000/api/role/get
+content-type: application/json
+
+
+### Post Role
+POST  http://localhost:8000/api/role/create
+content-type: application/json
+
+{
+    "name": "Người bán",
+    "accessApp": "dashboard, posts",
+    "description": "Dành cho người bán ve chai"
+}

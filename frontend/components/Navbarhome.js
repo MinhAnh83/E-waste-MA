@@ -1,13 +1,7 @@
 
 import Image from 'next/image'
-import { Container, Row, Col } from 'reactstrap'
 import Link from 'next/link'
 import style from '@/styles/navbar/Navbar.module.css'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCoffee } from '@fortawesome/free-solid-svg-icons'
-
-
-import { faFacebook, faTwitter } from '@fortawesome/free-brands-svg-icons'
 
 const Narvbarhome = () => {
     return (

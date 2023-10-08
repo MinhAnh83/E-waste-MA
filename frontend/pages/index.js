@@ -39,7 +39,7 @@ import {
   CarouselControl,
   CarouselIndicators,
   CarouselCaption,
-  captionText
+
 } from 'reactstrap';
 
 import "bootstrap/dist/css/bootstrap.min.css";

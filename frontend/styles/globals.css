@@ -886,3 +886,9 @@ body {
 .youtube p {
   font-size: 22px;
 }
+link:hover{
+  color: blueviolet;
+}
+a:hover{
+  color: blueviolet;
+}
