@@ -1,5 +1,6 @@
 'use strict'
 const { products } = require('../data')
+const CryptoJS = require('crypto-js')
 const JWT = require('jsonwebtoken')
 const UserModel = require('../model/user.repo')
 const SECRECT_KEY = '123'
@@ -8,8 +9,8 @@ class UserController {
     static signUp = async (req, res, next) => {
         try {
             // 1.
-            const {  email, password, fullname, phonenumer, address, image ,RoleID} = req.body
-            if(!password || !email || !fullname ) throw new Error('Inputs are not valid!!')
+            const {  fullname, email, password , phonenumber, address, role_id} = req.body
+            if(!password || !email || !fullname || !phonenumber || !role_id) throw new Error('Inputs are not valid!!')
             // 2.
             const foundUser = await UserModel.getUserByEmail(email)
             if(foundUser) throw new Error(`User existing`)
@@ -20,12 +21,11 @@ class UserController {
                 email: email, 
                 fullname: fullname, 
                 password: passwordCipher, 
-                phonenumer: phonenumer, 
+                phonenumber: phonenumber, 
                 address: address, 
-                image: image ,
-                RoleID:RoleID
+                role_id:role_id
             })
-
+            console.log(2)
             res.status(200).json({
                 code: 200,
                 message: 'Create user success!',
@@ -125,43 +125,6 @@ class UserController {
         }
     }
 
-    static signUp = async (req, res, next) => {
-        try {
-            // 1.
-            const { email, password, fullname, phonenumer, address, image,RoleID } = req.body
-            if(!password || !email || !fullname) throw new Error('Inputs are not valid!!')
-            // 2.
-            const foundCustomer = await UserModel.getUserByEmail(email)
-            if(foundCustomer) throw new Error(`Customer existing`)
-            // 3.
-            const passwordCipher = CryptoJS.AES.encrypt(password, SECRECT_KEY).toString();
-            // 4.
-            const results = await UserModel.createUser({ 
-                email: email, 
-                fullname: fullname, 
-                password: passwordCipher ,
-                phonenumer: phonenumer, 
-                address:address , 
-                image:image,
-                RoleID:RoleID
-
-                
-            })
-
-            res.status(200).json({
-                code: 200,
-                message: 'Create customer success!',
-                data: results
-            })
-        } catch (err) {
-            res.status(500).json({
-                code: 500,
-                message: 'Error:::',
-                error: err
-            })
-        }
-    }
-
     /**
      * 1. tìm customer theo email
      * 2. nếu ko có => ném lỗi
@@ -175,25 +138,25 @@ class UserController {
         try {
             const { email, password } = req.body
             // 1.
-            const foundCustomer = await CustomerModel.getCustomerByEmail(email)
+            const foundUser = await UserModel.getUserByEmail(email)
             // 2.
-            if(!foundCustomer) throw new Error('User not exist!')
+            if(!foundUser) throw new Error('User not exist!')
             // 3.
-            const bytes = CryptoJS.AES.decrypt(foundCustomer.password, SECRECT_KEY)
+            const bytes = CryptoJS.AES.decrypt(foundUser.password, SECRECT_KEY)
             const passwordText = bytes.toString(CryptoJS.enc.Utf8)
             // 4.
             if(password !== passwordText) throw new Error('Password not match')
             // 5.
-            const token = await JWT.sign({ id: foundCustomer.id, email: foundCustomer.email }, SECRECT_KEY, { expiresIn: '12h' })
+            const token = await JWT.sign({ id: foundUser.id, email: foundUser.email }, SECRECT_KEY, { expiresIn: '12h' })
             // 6.
-            const updateResult = await CustomerModel.updateToken({ id: foundCustomer.id, token: token })
+            const updateResult = await UserModel.updateToken({ id: foundUser.id, token: token })
             if(!updateResult) throw new Error('Update token fail')
             // 7.
             res.status(200).json({
                 code: 200,
                 message: 'Login Ok!!!',
                 data: {
-                    result: foundCustomer,
+                    result: foundUser,
                     token
                 }
             })

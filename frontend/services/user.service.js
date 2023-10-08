@@ -8,9 +8,9 @@ class UserService {
         return await Axios.post('/api/user/login', { email, password })
     }
     
-    static signup = async ( email, password, fullname, phonenumer, address, image) => {
+    static signup = async ( fullname, email, password , phonenumber, address, role_id) => {
         console.log(`data:::`, fullname, email, password)
-        return await Axios.post('/api/customer/signup', {  email, password, fullname, phonenumer, address, image })
+        return await Axios.post('/api/user/signup', {  fullname, email, password , phonenumber, address, role_id })
     }
 }
 

@@ -2,14 +2,16 @@
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCoffee, faSun, faMoon } from '@fortawesome/free-solid-svg-icons'
-import { useState } from 'react'
+import { useState, useEffect} from 'react'
 import React from 'react'
 import Link from 'next/link'
-import {pages} from '../utils/contanst'
-export default function Layout({ children }) {
+
+export default function Layout({ pages=[],user={},children }) {
    
     const [navs, setNavs] = useState(pages)
-
+useEffect(()=>{
+    setNavs(pages)
+},[pages])
     const handelLogout = () => {
         setCookie('vechaitoken', '')
         window.location.reload()
@@ -35,7 +37,7 @@ export default function Layout({ children }) {
                         {navs.map((nav, index) => {
                             return (
                             
-                                    <div className="menu-item flex ">
+                                    <div className="menu-item flex " key={index}>
                                         <Link href={nav.href}> 
                                         <div className="icon">
                                             {nav.icon}
@@ -89,7 +91,7 @@ export default function Layout({ children }) {
                                 src="https://raw.githubusercontent.com/programmercloud/nft-dashboard/main/img/user.png"
                                 alt=""
                             />
-                            <p>Hassnain</p>
+                            <p>{user.fullname}</p>
                             <ion-icon name="chevron-down-outline"></ion-icon>
                         </div>
                     </div>

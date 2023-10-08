@@ -19,6 +19,7 @@ export function middleware(request) {
     Axios.defaults.headers.common['authorization'] = value;
   }).catch((err)=>{
     console.log(err)
+    NextResponse.redirect(new URL('/login', request.url))
   })
    
 }

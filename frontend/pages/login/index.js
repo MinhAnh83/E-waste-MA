@@ -57,7 +57,7 @@ export default function Home({ data }) {
   const onHandleLogin = (e) => {
     e.preventDefault()
     //goi cong 3000
-    Axios.post('/api/login/customer', {
+    Axios.post('/api/login/user', {
       ...customer
 
     }).then((response) => {

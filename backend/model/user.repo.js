@@ -3,11 +3,15 @@
 
 const { con } = require('../model/index')
 class UserModel {
-    static createUser = async ({ email, password, fullname, phonenumer, address, image ,role_id}) => {
+    static createUser = async ({ email, password, fullname, phonenumber, address ,role_id}) => {
+        console.log('init')
         return new Promise((resolve, reject) => {
-            con.query('INSERT INTO users SET ? ', {email, password, fullname, phonenumer, address, image, role_id} ,
+            con.query('INSERT INTO users SET ? ', {email, password, fullname, phonenumber, address,  role_id} ,
                 function (error, results, fields) {
-                    if (error) reject(error)
+                    if (error) {
+                        console.log(error)
+                        reject(error)
+                    }
                     resolve(results)
                 })
         })
@@ -36,7 +40,7 @@ class UserModel {
             con.query('SELECT * FROM users WHERE email =?',[email],
             function(error,results){
                 if(error) reject(error)
-                resolve(results)
+                resolve(results[0])
             })
         })
     }
@@ -48,6 +52,15 @@ class UserModel {
              })
          })
      }
+     static updateToken = async ({ id, token }) => {
+        return new Promise((resolve, reject) => {
+            con.query('UPDATE users SET token = ? WHERE id = ?', [token, id], 
+            function (error, results, fields) {
+                if (error) reject(error);
+                resolve(results)
+            });
+        })
+    }
     static initTableToDB = async () => {
         var sql = 'CREATE TABLE IF NOT EXISTS users (id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,  role_id INT NOT NULL, email VARCHAR(255) NOT NULL, password VARCHAR(255) NOT NULL, fullname VARCHAR(255) NOT NULL, token VARCHAR(255), phonenumber VARCHAR(255) NOT NULL, address VARCHAR(255) NOT NULL, image VARCHAR(255) NOT NULL, FOREIGN KEY (role_id) REFERENCES roles(role_id)) ';
         return con.querySync(sql);
