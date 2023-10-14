@@ -16,7 +16,7 @@ export function middleware(request) {
   .then((data)=>{
     console.log('Data:::',data )
     const {customerId, customerEmail, customerRole} = data
-    Axios.defaults.headers.common['authorization'] = value;
+    // Axios.defaults.headers.common['authorization'] = value;
   }).catch((err)=>{
     console.log(err)
     NextResponse.redirect(new URL('/login', request.url))

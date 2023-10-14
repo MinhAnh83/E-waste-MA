@@ -26,7 +26,7 @@ class MailHelper {
                 clientSecret: CLIENT_SECRET,
                 refreshToken: REFESH_TOKEN,
                 accessToken: accessToken
-            },
+            },                          
         })
         return transport
     }

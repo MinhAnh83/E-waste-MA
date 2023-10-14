@@ -2,16 +2,16 @@
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCoffee, faSun, faMoon } from '@fortawesome/free-solid-svg-icons'
-import { useState, useEffect} from 'react'
+import { useState, useEffect } from 'react'
 import React from 'react'
 import Link from 'next/link'
 
-export default function Layout({ pages=[],user={},children }) {
-   
+export default function Layout({ pages = [], user = {}, children }) {
+
     const [navs, setNavs] = useState(pages)
-useEffect(()=>{
-    setNavs(pages)
-},[pages])
+    useEffect(() => {
+        setNavs(pages)
+    }, [pages])
     const handelLogout = () => {
         setCookie('vechaitoken', '')
         window.location.reload()
@@ -31,23 +31,25 @@ useEffect(()=>{
             <div className="dashboard">
 
                 <div className="sidebar flex-c flex-sb">
-                    <div className="brand">E-Waste</div>
+                    <div className="brand">E-Waste  <p style={{ fontSize: '10px' }}>{user.name}</p> </div>
+
+
                     <div className="side-nav">
 
                         {navs.map((nav, index) => {
                             return (
-                            
-                                    <div className="menu-item flex " key={index}>
-                                        <Link href={nav.href}> 
+
+                                <div className="menu-item flex " key={index}>
+                                    <Link href={nav.href}>
                                         <div className="icon">
                                             {nav.icon}
-                                            <p style={{fontSize:'20px'}}>{nav.name}</p>
+                                            <p style={{ fontSize: '20px' }}>{nav.name}</p>
                                         </div>
 
-                                           </Link>
+                                    </Link>
 
-                                    </div>
-                                
+                                </div>
+
                             )
                         })}
 
