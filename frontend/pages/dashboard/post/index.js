@@ -72,7 +72,7 @@ export default function Post({ userData }) {
                    </div>
                    <Blog />
                    
-                    {/* <Saler /> */}
+                    
                 </Layout>
                 {/* <!-- ======Section======= --> */}
 

@@ -23,7 +23,7 @@ export default function Saler({ userData }) {
         refesh()
     }, [])
     const refesh = () => {
-        axios.get('api/post?limit=10').then((response) => {
+        axios.get('/api/post?limit=10').then((response) => {
             const { data } = response.data
             console.log(data)
             setPosts(data)

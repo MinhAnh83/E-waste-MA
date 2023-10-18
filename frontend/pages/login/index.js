@@ -32,7 +32,8 @@ import {
   Navbar,
   NavItem,
   NavLink,
-  Nav
+  Nav,
+  Spinner
 } from "reactstrap";
 const inter = Inter({ subsets: ['latin'] })
 //dung getStaticProps goi duoc cong 8000
@@ -51,6 +52,7 @@ export default function Home({ data }) {
     email: '',
     password: ''
   })
+  const [spinner, setSpinner] = useState(false)
   const handle = () => {
     window.alert('test nè')
   }
@@ -71,6 +73,7 @@ export default function Home({ data }) {
        Axios.defaults.headers.common['authorization'] = token;
       localStorage.setItem('user', email)
       setCookie('vechaitoken',token,2)
+      setSpinner(true)
        window.location.replace('/dashboard')
       // router.push('/dashboard')
       // navigate('/')
@@ -144,7 +147,8 @@ export default function Home({ data }) {
                 <Button className={styles.btnLogin}
                   size="lg"
                   onClick={onHandleLogin}>
-                  Bắt đầu
+                {(spinner)?<Spinner></Spinner> : 'Bắt đầu' }  
+                  
                 </Button>
               </Card>
 

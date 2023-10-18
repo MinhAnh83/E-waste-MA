@@ -9,7 +9,7 @@ import Layout from '@/components/Layout';
 import { faCoffee, faSun, faMoon } from '@fortawesome/free-solid-svg-icons'
 import { NextResponse } from 'next/server'
 import { pages } from '@/utils/contanst'
-import Saler from './Saler.home';
+
 
 export default function () {
     const Map = dynamic(() => import("@/components/Map"), {
