@@ -7,16 +7,15 @@ const ProductModel = require('../model/product.repo')
 const ShopModel = require('../model/shop.repo')
 const UserModel = require('../model/user.repo')
 const RoleModel = require('../model/role.repo')
+const PostModel= require('../model/post.repo')
 
 
 connection(async () => {
     try {
-        await ShopModel.initTableToDB()
-        await CustomerModel.initTableToDB() // promise
-        await CategoryModel.initTableToDB()
-        await ProductModel.initTableToDB()
+       
         await RoleModel.initTableToDB()
         await UserModel.initTableToDB()
+        await PostModel.inittableToDb()
         console.log('All tables created success:::::')
     } catch(err) {
         console.log(err)

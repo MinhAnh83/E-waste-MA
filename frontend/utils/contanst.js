@@ -1,18 +1,42 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCoffee, faSun, faMoon } from '@fortawesome/free-solid-svg-icons'
+import { faShop, faNewspaper, faMagnifyingGlassLocation, faStore ,faCircleUser} from '@fortawesome/free-solid-svg-icons'
 export const pages = [
     {
         key: "dashboard",
-        name: "Trang chu",
-        icon: <FontAwesomeIcon icon={faSun} style={{ width: '20px', height: '20px' }} />,
-        href: '/'
+        name: "Home page",
+        icon: <FontAwesomeIcon icon={faShop} style={{ width: '20px', height: '20px',  marginBottom: '12px' }} />,
+        href: '/dashboard'
 
     },
     {
         key: "posts",
-        name: "Bai viet ",
-        icon: <FontAwesomeIcon icon={faSun} style={{ width: '20px', height: '20px' }} />,
+        name: "Blog",
+        icon: <FontAwesomeIcon icon={faNewspaper} style={{ width: '20px', height: '20px',   marginBottom: '12px' }} />,
         href: '/dashboard/post'
+
+    },
+    {
+        key: "findbuyer",
+        name: "Find Buyers",
+        icon: <FontAwesomeIcon icon={faMagnifyingGlassLocation} style={{ width: '20px', height: '20px',   marginBottom: '12px' }} />,
+        href: '/dashboard/findbuyer'
+        
+
+    },
+    {
+        key: "saleplaces",
+        name: "Find Buyers",
+        icon: <FontAwesomeIcon icon={faStore} style={{ width: '20px', height: '20px',   marginBottom: '12px' }} />,
+        href: '/dashboard/saleplaces'
+        
+
+    },
+    {
+        key: "myposts",
+        name: "Manage posts",
+        icon: <FontAwesomeIcon icon={faCircleUser} style={{ width: '20px', height: '20px',   marginBottom: '12px' }} />,
+        href: '/dashboard/myposts'
+        
 
     }
 ]

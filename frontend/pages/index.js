@@ -163,7 +163,7 @@ export default function Home({ data }) {
             <Col>
               <h3 style={{ color: 'purple', marginBottom: '20px' }}>MUA & BÁN E-WASTE </h3>
               <span style={{ color: 'purple', marginBottom: '40px', fontWeight:'800', letterSpacing:'3px',paddingBottom:'20px' }}>NHANH, TIỆN LỢI, GIÁ CAO</span>
-              <p style={{ marginBottom: '20px',   fontFamily: 'Florence, cursive' }}> Ứng dụng giúp việc mua và bán rác thải điện tử trở nên
+              <p style={{ marginBottom: '20px',   fontFamily: 'Florence, cursive', color:'white' }}> Ứng dụng giúp việc mua và bán rác thải điện tử trở nên
                 dễ dàng, nhanh chóng, tiện lợi với công nghệ hỗ trợ việc mua bán. </p>
               {/* <a className={styles.buttonTry} href="#">Dùng thử</a> */}
               <Link  className={styles.buttonTry} href="/register">Dùng thử</Link>

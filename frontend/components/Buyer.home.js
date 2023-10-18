@@ -1,66 +1,123 @@
 import Head from 'next/head';
 import Script from 'next/script';
 import Link from 'next/link';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
 import Axios from '@/helper/axios.helper'
 import dynamic from 'next/dynamic'
 import Layout from '@/components/Layout';
-import { faPlus } from '@fortawesome/free-solid-svg-icons'
+import { faCoffee, faSun, faMoon } from '@fortawesome/free-solid-svg-icons'
 import { NextResponse } from 'next/server'
 import { pages } from '@/utils/contanst'
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
-import CreatePost from './createPost';
-import PostDashboard from './PostDashboard';
-export default function Saler({ userData }) {
+import Saler from './Saler.home';
+
+export default function () {
     const Map = dynamic(() => import("@/components/Map"), {
         ssr: false,
         loading: () => <p>Loading...</p>,
     });
-    const [posts, setPosts] = useState([])
-    useEffect(() => {
-        refesh()
-    }, [])
-    const refesh = () => {
-        axios.get('api/post?limit=10').then((response) => {
-            const { data } = response.data
-            console.log(data)
-            setPosts(data)
-        })
-    }
-    const handleCreatedCB = () => {
-        setModal(false)
-        refesh()
-    }
-    const [modal, setModal] = useState(false);
-
-    const toggle = () => setModal(!modal);
-
     return (
         <>
             <div className="heading" style={{ marginTop: 20 }}>
                 <h2>MAP</h2>
                 <Map />
             </div>
-           
+
             <div className="section flex flex-sb" >
-           
-            
                 <div className="section-left">
-              <div className='create-post'>
-               
-             
-              <Link href='/dashboard/'  onClick={toggle} style={{ marginTop: '30px' }}>
-              <FontAwesomeIcon icon={faPlus} style={{ width: '20px', height: '20px', marginBottom: '3px' , marginRight:'10px'}} />
-                        Tạo bài viết
-                    </Link>
-                </div>  
-                    <PostDashboard posts={posts}></PostDashboard>
+                    <div className="nfts">
+                        <div className="trending heading flex flex-sb " style={{ marginTop: "20px" }}>
+                            <h2>Some Posts</h2>
+                        </div>
+
+                        {/* <!-- =====Browse NFT===== --> */}
+                        <div className="browse">
+                            <div className="nft">
+                                <img
+                                    src="https://raw.githubusercontent.com/programmercloud/nft-dashboard/main/img/nft-1.jpg"
+                                    alt=""
+                                />
+                                <div className="title">Weary Artwork</div>
+                                <div className="details flex flex-sb">
+                                    <div className="author flex">
+                                        <img
+                                            src="https://raw.githubusercontent.com/programmercloud/nft-dashboard/main/img/user.png"
+                                            alt=""
+                                        />
+                                        <p>Hassnain Haider</p>
+                                    </div>
+                                    <div className="price">4.5 ETH</div>
+                                </div>
+                            </div>
+
+                            <div className="nft">
+                                <img
+                                    src="https://raw.githubusercontent.com/programmercloud/nft-dashboard/main/img/nft-2.jpg"
+                                    alt=""
+                                />
+                                <div className="title">Spectrum of Color</div>
+                                <div className="details flex flex-sb">
+                                    <div className="author flex">
+                                        <img
+                                            src="https://raw.githubusercontent.com/programmercloud/nft-dashboard/main/img/user.png"
+                                            alt=""
+                                        />
+                                        <p>Hassnain Haider</p>
+                                    </div>
+                                    <div className="price">4 ETH</div>
+                                </div>
+                            </div>
+
+                            <div className="nft">
+                                <img
+                                    src="https://raw.githubusercontent.com/programmercloud/nft-dashboard/main/img/nft-3.jpg"
+                                    alt=""
+                                />
+                                <div className="title">Vivid Artwork</div>
+                                <div className="details flex flex-sb">
+                                    <div className="author flex">
+                                        <img
+                                            src="https://raw.githubusercontent.com/programmercloud/nft-dashboard/main/img/user.png"
+                                            alt=""
+                                        />
+                                        <p>Hassnain Haider</p>
+                                    </div>
+                                    <div className="price">3.5 ETH</div>
+                                </div>
+                            </div>
+
+                            <div className="nft">
+                                <img
+                                    src="https://raw.githubusercontent.com/programmercloud/nft-dashboard/main/img/nft-4.jpg"
+                                    alt=""
+                                />
+                                <div className="title">Nature's Love</div>
+                                <div className="details flex flex-sb">
+                                    <div className="author flex">
+                                        <img
+                                            src="https://raw.githubusercontent.com/programmercloud/nft-dashboard/main/img/user.png"
+                                            alt=""
+                                        />
+                                        <p>Hassnain Haider</p>
+                                    </div>
+                                    <div className="price">5 ETH</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
                 {/* <!-- Section Right --> */}
                 <div className="section-right">
+                    {/* <div className="graph flex-c">
+                            <p>Balance</p>
+                            <h2>93,565.00</h2>
+
+                            <img
+                                src="https://raw.githubusercontent.com/programmercloud/nft-dashboard/main/img/graph.svg"
+                                alt=""
+                            />
+                        </div> */}
 
                     <div className="top-creators">
                         <div className="heading flex flex-sb">
@@ -172,16 +229,6 @@ export default function Saler({ userData }) {
                     </div>
                 </div>
             </div>
-
-            <Modal isOpen={modal} toggle={toggle} >
-                <ModalHeader toggle={toggle} style={{ textAlign: 'center', fontSize: '12px' }}>Tạo bài viết</ModalHeader>
-                <ModalBody>
-
-                    <CreatePost userData={userData} handleCreatedCB={handleCreatedCB}></CreatePost>
-
-                </ModalBody>
-
-            </Modal>
         </>
     )
 }

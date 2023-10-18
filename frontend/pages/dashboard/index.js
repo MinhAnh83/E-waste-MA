@@ -10,6 +10,7 @@ import { faCoffee, faSun, faMoon } from '@fortawesome/free-solid-svg-icons'
 import { NextResponse } from 'next/server'
 import { pages } from '@/utils/contanst'
 import Saler from '@/components/Saler.home';
+import BuyerHome from '@/components/Buyer.home';
 // import '@/styles/globals.css'
 //import { BsSun, BsFillMoonStarsFill, BsFillBellFill,BsFillGridFill } from "react-icons/bs"
 
@@ -69,8 +70,11 @@ export default function Dashboard({ userData }) {
         <main>
             <Layout pages={layoutPages} user={{ fullname, email, name }}>
 
-                <Saler />
+            {(name === 'saler') ?<Saler userData={userData}></Saler> : null }
+
+            {(name === 'buyer') ?<BuyerHome></BuyerHome> : null }
             </Layout>
+            
             {/* <!-- ======Section======= --> */}
 
             {/* <!-- ======End Section======= --> */}
@@ -81,4 +85,5 @@ export default function Dashboard({ userData }) {
     </>
 
 }
+
 

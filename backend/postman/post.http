@@ -1,0 +1,18 @@
+### Post Role
+POST  http://localhost:8000/api/post/create
+content-type: application/json
+
+{
+    "user_id": " 2", 
+    "name": "Máy tính DELL 15R ", 
+    "content":"Tôi cần bán máy tính đã qua sử dụng và tôi đã sử dụng nó 10 năm.  Máy còn mới 60% .", 
+    "image": "link", 
+    "expect_price": 1000000, 
+    "items": null,
+    "status": "publish"
+    
+}
+
+### GET posts
+GET http://localhost:8000/api/post/get?limit=2&offset=0
+content-type: application/json
