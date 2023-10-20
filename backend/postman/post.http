@@ -20,3 +20,12 @@ content-type: application/json
 ### GET posts
 GET http://localhost:3000/api/post
 content-type: application/json
+
+### GET posts
+GET http://localhost:3000/api/mypost?userid=2
+content-type: application/json
+
+### GET posts
+GET http://localhost:8000/api/post/get
+
+content-type: application/json

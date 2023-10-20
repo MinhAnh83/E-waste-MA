@@ -50,6 +50,29 @@ class PostController {
 
 
     }
+    static getMyPosts = async (req, res, next) => {
+        try {
+            const { user_id } = req.query
+            const results = await PostModel.getMyPosts({user_id})
+            // console.log(results)
+            if (!results) throw new Error("Don't have data");
+            res.status(200).json({
+                message: 'Get posts success!',
+                data: results
+            })
+
+        }
+        catch (err) {
+            console.log(err)
+            res.status(500).json({
+                code: 500,
+                message: 'Error::: c',
+                error: err.message
+            })
+        }
+
+
+    }
 
 }
 module.exports = PostController
