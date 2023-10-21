@@ -1,5 +1,6 @@
 import Head from 'next/head';
 import Script from 'next/script';
+import Image from 'next/image';
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
@@ -9,6 +10,7 @@ import Layout from '@/components/Layout';
 import { faCoffee, faSun, faMoon } from '@fortawesome/free-solid-svg-icons'
 import { NextResponse } from 'next/server'
 import { pages } from '@/utils/contanst'
+import {Button} from 'reactstrap'
 
 // import '@/styles/globals.css'
 //import { BsSun, BsFillMoonStarsFill, BsFillBellFill,BsFillGridFill } from "react-icons/bs"

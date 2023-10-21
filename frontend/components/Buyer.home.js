@@ -11,11 +11,11 @@ import { NextResponse } from 'next/server'
 import { pages } from '@/utils/contanst'
 
 
-export default function () {
+export default function Map() {
     const Map = dynamic(() => import("@/components/Map"), {
         ssr: false,
         loading: () => <p>Loading...</p>,
-    });
+    }); 
     return (
         <>
             <div className="heading" style={{ marginTop: 20 }}>
@@ -91,7 +91,7 @@ export default function () {
                                     src="https://raw.githubusercontent.com/programmercloud/nft-dashboard/main/img/nft-4.jpg"
                                     alt=""
                                 />
-                                <div className="title">Nature's Love</div>
+                                <div className="title">Natures Love</div>
                                 <div className="details flex flex-sb">
                                     <div className="author flex">
                                         <img
