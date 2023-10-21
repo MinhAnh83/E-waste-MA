@@ -1074,3 +1074,9 @@ a:hover{
 .create-post:hover{
   color: rgb(148, 235, 148) !important
 }
+.footer-blog{
+  text-align: center;
+  padding: 3px;
+  background-color: DarkSalmon;
+  color: white;
+}

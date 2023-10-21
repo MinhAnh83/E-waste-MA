@@ -6,9 +6,14 @@ import { useState, useEffect } from 'react'
 import React from 'react'
 import Link from 'next/link'
 
-export default function Layout({ pages = [], user = {}, children }) {
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 
+export default function Layout({ pages = [], user = {}, children }) {
+    const [modal, setModal] = useState(false);
     const [navs, setNavs] = useState(pages)
+    const toggle = () => setModal(!modal);
+    console.log('hello',user)
+
     useEffect(() => {
         setNavs(pages)
     }, [pages])
@@ -88,7 +93,7 @@ export default function Layout({ pages = [], user = {}, children }) {
                             {/* <BsFillBellFill/> */}
                         </div>
 
-                        <div className="user flex flex-sb">
+                        <div className="user flex flex-sb" onClick={toggle}>
                             <img
                                 src="https://raw.githubusercontent.com/programmercloud/nft-dashboard/main/img/user.png"
                                 alt=""
@@ -101,6 +106,21 @@ export default function Layout({ pages = [], user = {}, children }) {
                     {children}
                 </div>
             </div>
+
+            <Modal isOpen={modal} toggle={toggle} >
+                <ModalHeader toggle={toggle}>Profile</ModalHeader>
+                <ModalBody>
+                  <h4>Hello {user.fullname} !</h4>
+                  <p>Email: {user.email}</p>
+                  
+                </ModalBody>
+                <ModalFooter>
+               
+                    <Button color="secondary" onClick={toggle}>
+                        Fix profile
+                    </Button>
+                </ModalFooter>
+            </Modal>
 
 
         </>

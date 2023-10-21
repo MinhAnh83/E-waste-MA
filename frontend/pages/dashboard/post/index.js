@@ -70,7 +70,7 @@ export default function Post({ userData }) {
                    <div style={{marginTop: '30px'}}>
 
                    </div>
-                   <Blog />
+                   <Blog userData={userData}/>
                    
                     
                 </Layout>
