@@ -38,8 +38,8 @@ import {
 const inter = Inter({ subsets: ['latin'] })
 //dung getStaticProps goi duoc cong 8000
 export async function getStaticProps() {
-  const res = await Axios.get('/api/product')
-console.log(res)
+//   const res = await Axios.get('/api/product')
+// console.log(res)
   return {
     props: {
       data: {}

@@ -28,7 +28,6 @@ const handleCreatePost=()=>{
   uploadFileToStorage(files).then((imgURL)=>{
     createPost.image=imgURL
     axios.post('/api/post',{...createPost}).then(()=>{
-
       handleCreatedCB && handleCreatedCB()
       //goi nguoc lai ham me
     })

@@ -7,7 +7,7 @@ export function middleware(request) {
   const {name,value}=cookie
   console.log('Cookiee:::',cookie)
   //name la ten 'vechaitoken', value la token
-  fetch(process.env['SERVERHOST']+'/api/customer/authen',{
+  fetch(process.env['SERVERHOST']+'/api/user/authen',{
     method:'GET',
     headers:{
       'authorization':value
@@ -15,7 +15,7 @@ export function middleware(request) {
   }).then(response=>response.json())
   .then((data)=>{
     console.log('Data:::',data )
-    const {customerId, customerEmail, customerRole} = data
+    const {userId, userEmail, userRole} = data
     // Axios.defaults.headers.common['authorization'] = value;
   }).catch((err)=>{
     console.log(err)

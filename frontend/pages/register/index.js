@@ -36,13 +36,13 @@ import {
 const inter = Inter({ subsets: ['latin'] })
 
 export async function getStaticProps() {
-    axios.get('/api/product').then(res => {
+    // axios.get('/api/product').then(res => {
 
-        const { data } = res.data;
-        // data nay la dat tren shopcontroller
-        console.log(data)
+    //     const { data } = res.data;
+    //     // data nay la dat tren shopcontroller
+    //     console.log(data)
 
-    })
+    // })
     return {
         props: {
             data: {}

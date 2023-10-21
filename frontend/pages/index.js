@@ -124,9 +124,9 @@ const items = [
   },
 ];
 export async function getStaticProps() {
-  const res = await Axios.get('/api/product')
+  // const res = await Axios.get('/api/product')
   //const {data} =  res.json()
-  console.log(res)
+
   return {
     props: {
       data: {}

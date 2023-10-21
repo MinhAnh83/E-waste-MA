@@ -170,25 +170,23 @@ class UserController {
         }
     }
 
-    static getCustomer = async (req, res, next) => {
-
-    }
+  
 
     static authenCustomer = async (req, res, next) => {
-        const customerId = req.headers["customer-id"]
-        const customerEmail = req.headers["customer-email"]
-        console.log(req.headers["customer-id"])
-        const customerRole =req.headers["customer-role"]
+        const userId = req.headers["user-id"]
+        const userEmail = req.headers["user-email"]
+        console.log(req.headers["user-id"])
+        const userRole =req.headers["user-role"]
         
         res.json({
-            customerId, customerEmail,customerRole
+            userId, userEmail,userRole
         })
     }
     static getUserWithRole = async (req, res, next) => {
-        const customerId = req.headers["customer-id"]
+        const userId = req.headers["user-id"]
         // const customerEmail = req.headers["customer-email"]
         // const customerRole =req.headers["customer-role"]
-        const result = await UserModel.getUserWithRole(parseInt(customerId))
+        const result = await UserModel.getUserWithRole(parseInt(userId))
         res.json(result)
     }
 }
