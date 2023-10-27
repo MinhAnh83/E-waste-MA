@@ -58,10 +58,12 @@ export default function Myposts({ userData }) {
     }
 
     const MyPostft = () => {
-        axios.get(`/api/mypost?userid=2`).then((response) => {
+        axios.get(`/api/mypost?userid=${id}`).then((response) => {
             const { data } = response
             console.log('heelo', data)
-            setMypost(data[0])
+            if(!data && !data.data) return
+            const posts = data.data;
+            setMypost(posts)
 
         }).catch((err) => {
 

@@ -24,7 +24,7 @@ export const pages = [
 
     },
     {
-        key: "saleplaces",
+        key: "findsaleplaces",
         name: "Find Buyers",
         icon: <FontAwesomeIcon icon={faStore} style={{ width: '20px', height: '20px',   marginBottom: '12px' }} />,
         href: '/dashboard/saleplaces'
@@ -36,6 +36,14 @@ export const pages = [
         name: "Manage posts",
         icon: <FontAwesomeIcon icon={faCircleUser} style={{ width: '20px', height: '20px',   marginBottom: '12px' }} />,
         href: '/dashboard/myposts'
+        
+
+    },
+    {
+        key: "myscrapyard",
+        name: "Manage scrap yard",
+        icon: <FontAwesomeIcon icon={faCircleUser} style={{ width: '20px', height: '20px',   marginBottom: '12px' }} />,
+        href: '/dashboard/myscrapyard'
         
 
     }

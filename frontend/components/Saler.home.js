@@ -62,7 +62,7 @@ export default function Saler({ userData }) {
                 {/* <!-- Section Right --> */}
                 <div className="section-right">
 
-                    <div className="top-creators">
+                    <div className="top-creators" style={{marginTop:'20px'}}>
                         <div className="heading flex flex-sb">
                             <h2>Top Salers</h2>
                             <p >See all</p>

@@ -53,8 +53,9 @@ class PostController {
     static getMyPosts = async (req, res, next) => {
         try {
             const { user_id } = req.query
-            const results = await PostModel.getMyPosts({user_id})
-            // console.log(results)
+            console.log(user_id)
+            const results = await PostModel.getMyPosts({user_id: parseInt(user_id)})
+            console.log(results)
             if (!results) throw new Error("Don't have data");
             res.status(200).json({
                 message: 'Get posts success!',

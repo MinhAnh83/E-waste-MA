@@ -20,7 +20,7 @@ export default function Map() {
         <>
             <div className="heading" style={{ marginTop: 20 }}>
                 <h2>MAP</h2>
-                <Map />
+                <Map markerList={[{position: [51.567, -0.09], popupcontent: "Ha Noi"}]} />
             </div>
 
             <div className="section flex flex-sb" >

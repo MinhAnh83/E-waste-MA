@@ -6,11 +6,12 @@ const app = express();
 const port = 8000;
 const bodyParser = require('body-parser')
 const session = require('express-session');
+const morgan = require('morgan')
 
 // Middleware
 
 app.use(express.json())
-
+app.use(morgan('combined'))
 app.use(cors())
 app.use(session({
   resave: true, 

@@ -2,6 +2,9 @@
 GET http://localhost:8000/api/role/get
 content-type: application/json
 
+### GET roles
+GET http://localhost:3000/api/role
+content-type: application/json
 
 ### Post Role
 POST  http://localhost:8000/api/role/create

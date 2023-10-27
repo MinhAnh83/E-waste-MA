@@ -1,0 +1,13 @@
+### POST Create customer
+POST http://localhost:8000/api/scrapyard/create
+content-type: application/json
+
+{ 
+     "address": "30/ 43 Thich Quang Duc",
+"name": "vua Thanh Thuy", 
+"image": null,
+ "langlat": "500.4, -19.6", 
+ "open_time": "thu hai ",
+ "user_id":2
+    
+}
