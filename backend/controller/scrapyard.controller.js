@@ -4,6 +4,29 @@ const ScrapyardModel =require('../model/scrapyard.repo')
 
 
 class ScrapyardController{
+    static getScrapyards = async (req, res, next) => {
+        try {
+
+            const results = await ScrapyardModel.getScrapyards()
+            // console.log(results)
+            if (!results) throw new Error("Don't have data");
+            res.status(200).json({
+                message: 'Get scrapyards success!',
+                data: results
+            })
+
+        }
+        catch (err) {
+            console.log(err)
+            res.status(500).json({
+                code: 500,
+                message: 'Error::: c',
+                error: err.message
+            })
+        }
+
+
+    }
     static createScrapyard = async (req, res, next) => {
         try {
             const { address, name, image, langlat, open_time } = req.body;

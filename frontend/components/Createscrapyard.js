@@ -15,7 +15,7 @@ export default function Createscrapyard({ userData }) {
         address: null,
         name: null,
         image: null,
-        langlat: null,
+        langlat: "500.4, -19",
         open_time: null,
         user_id: id
     })
@@ -27,9 +27,12 @@ export default function Createscrapyard({ userData }) {
         if(!File) return setErrMsg('Vu long them anh !!')
         uploadFileToStorage(File).then((imgURL)=>{
             createScrapyard.image=imgURL
-          axios.post('/api/scrapyard',{...createScrapyard}).then(()=>{
+            console.log(imgURL)
+          axios.post('/api/myscrapyard',{...createScrapyard}).then(()=>{
             // handleCreatedCB && handleCreatedCB()
+            window.location.replace('/dashboard/myscrapyard')
             //goi nguoc lai ham me
+          
           })
       
         
@@ -128,7 +131,7 @@ export default function Createscrapyard({ userData }) {
                             }}
                         />
                     </Col>
-                    <Map style={{marginTop: '10px'}}/>
+                    <Map markerList={[{ position: [10.861481, 108.6194982], popupcontent: "Quy Nhon" }]} style={{marginTop: '10px'}}/>
                 </FormGroup>
             </Form>
             <Button style={{ fontSize: '12px' }} onClick={() => {

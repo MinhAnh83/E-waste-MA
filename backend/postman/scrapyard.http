@@ -3,11 +3,30 @@ POST http://localhost:8000/api/scrapyard/create
 content-type: application/json
 
 { 
-     "address": "30/ 43 Thich Quang Duc",
-"name": "vua Thanh Thuy", 
+     "address": "76 Tran Huy Lieu",
+"name": "vua THu Thuy", 
 "image": null,
  "langlat": "500.4, -19.6", 
  "open_time": "thu hai ",
- "user_id":2
+ "user_id":4
     
 }
+
+### POST Create customer
+POST http://localhost:3000/api/scrapyard
+content-type: application/json
+
+{ 
+     "address": "8 Phan Dinh Phung",
+"name": "vua Thu Nga", 
+"image": null,
+ "langlat": "500.4, -19", 
+ "open_time": "thu hai ",
+ "user_id":4
+    
+}
+
+### POST Create customer
+GET  http://localhost:8000/api/scrapyard/get
+content-type: application/json
+

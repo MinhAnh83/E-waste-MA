@@ -11,6 +11,7 @@ import { NextResponse } from 'next/server'
 import { pages } from '@/utils/contanst'
 import Saler from '@/components/Saler.home';
 import BuyerHome from '@/components/Buyer.home';
+import ScrapyardHome from '@/components/Scrapyard.home';
 // import '@/styles/globals.css'
 //import { BsSun, BsFillMoonStarsFill, BsFillBellFill,BsFillGridFill } from "react-icons/bs"
 
@@ -73,6 +74,8 @@ export default function Dashboard({ userData }) {
             {(name === 'saler') ?<Saler userData={userData}></Saler> : null }
 
             {(name === 'buyer') ?<BuyerHome ></BuyerHome> : null }
+            {(name === 'buyer') ?<BuyerHome ></BuyerHome> : null }
+            {(name === 'scrap yard owner') ?<ScrapyardHome ></ScrapyardHome> : null }
             </Layout>
             
             {/* <!-- ======Section======= --> */}

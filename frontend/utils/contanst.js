@@ -24,7 +24,7 @@ export const pages = [
 
     },
     {
-        key: "findsaleplaces",
+        key: "findscrapyard",
         name: "Find Buyers",
         icon: <FontAwesomeIcon icon={faStore} style={{ width: '20px', height: '20px',   marginBottom: '12px' }} />,
         href: '/dashboard/saleplaces'

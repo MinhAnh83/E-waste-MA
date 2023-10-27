@@ -3,7 +3,7 @@
 
 const { con } = require('./index')
 class ScrapyardModel{
-    static getScrapyard = async () => {
+    static getScrapyards = async () => {
         return new Promise((resolve, reject) => {
             con.query('SELECT * FROM scrapyards  ', function (error, results) {
                 if (error) reject(error);

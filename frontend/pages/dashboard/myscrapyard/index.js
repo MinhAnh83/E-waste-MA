@@ -35,12 +35,12 @@ export async function getServerSideProps({ req, res }) {
 
 export default function Myposts({ userData }) {
   const { fullname, name, email, accessApp, id } = userData;
-  const [Mypost, setMypost] = useState([])
+  const [Myscrapyards, setMyscrapyards] = useState([])
   //name la ten cua role
   const [layoutPages, setLayoutPages] = useState([])
   const Map = dynamic(() => import("@/components/Map"), {
     ssr: false,
-    loading: () => <p>Loading...</p>,
+    loading: () => <p>Loadingopl...</p>,
   });
   useEffect(() => {
     const accessAppList = accessApp.split(', ')
@@ -54,6 +54,11 @@ export default function Myposts({ userData }) {
       setLayoutPages(foundePages)
 
     }
+    axios.get('/api/myscrapyard').then((response)=>{
+      const {data} = response.data;
+      console.log('danh sachy',data)
+      setMyscrapyards(data)
+    })
 
   }, [])
 
@@ -79,7 +84,7 @@ export default function Myposts({ userData }) {
       <Layout pages={layoutPages} user={{ fullname, email, name }}>
         <div className="heading" style={{ marginTop: 20 }}>
           <h2>Quản lí vựa ve chai</h2>
-          <Map markerList={[{ position: [51.567, -0.09], popupcontent: "Quy Nhon" }]} />
+          <Map markerList={[{ position: [10.861481, 108.6194982], popupcontent: "Quy Nhon" }]} />
         </div>
 
 
@@ -92,64 +97,57 @@ export default function Myposts({ userData }) {
         <div className="table_scrapyard" style={{ marginTop: "20px" }}>
           <Table hover>
             <thead>
-              <tr>
+              <tr style={{textAlign:'center'}}>
                 <th>
                   #
                 </th>
                 <th>
-                  First Name
+                 Name
                 </th>
                 <th>
-                  Last Name
+                 Address
                 </th>
                 <th>
-                  Username
+                  Open time
+                </th>
+                <th>
+                    Image
                 </th>
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <th scope="row">
-                  1
-                </th>
-                <td>
-                  Mark
-                </td>
-                <td>
-                  Otto
-                </td>
-                <td>
-                  @mdo
-                </td>
-              </tr>
-              <tr>
-                <th scope="row">
-                  2
-                </th>
-                <td>
-                  Jacob
-                </td>
-                <td>
-                  Thornton
-                </td>
-                <td>
-                  @fat
-                </td>
-              </tr>
-              <tr>
-                <th scope="row">
-                  3
-                </th>
-                <td>
-                  Larry
-                </td>
-                <td>
-                  the Bird
-                </td>
-                <td>
-                  @twitter
-                </td>
-              </tr>
+              {Myscrapyards && Myscrapyards.map((myscrapyards, index)=>{
+                return(
+                  <tr>
+                  <th scope="row">
+                    {myscrapyards.scrapyard_id}
+                  </th>
+                  <td>
+                  {myscrapyards.name}
+                  </td>
+                  <td>
+                  {myscrapyards.address}
+                  </td>
+                  <td>
+                  {myscrapyards.open_time}
+                  </td>
+                  <td>
+                  <Image
+                                        loader={() => { return myscrapyards.image || "https://via.placeholder.com/100x100" }}
+                                        src="https://via.placeholder.com/100x100"
+                                        width={100}
+                                        height={100}
+                                        alt="Picture of the author"
+                                        style={{ textAlign: 'center' }}
+                                    />
+
+        
+                  </td>
+                </tr>
+                )
+              })}
+              
+         
             </tbody>
           </Table>
         </div>

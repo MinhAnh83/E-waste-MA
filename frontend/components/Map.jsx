@@ -6,7 +6,7 @@ import { icon } from "leaflet"
 import { useMapEvents } from 'react-leaflet/hooks'
 import "leaflet/dist/leaflet.css";
  
-export default function Map({ markerList = [],
+export default function Map({ markerList ,
   center = [10.861481, 106.6194982], zoom = 16, 
   scrollWheelZoom = true, height = "300px", width = "100%", handleClickMapCb
 }) {
@@ -15,7 +15,7 @@ export default function Map({ markerList = [],
 
   const getIcon = (marker) => {
     const ICON = icon({
-      iconUrl: marker.iconUrl || "../assets/img/",
+      iconUrl: marker.iconUrl || "../assets/img/iconscrapyard.png",
       iconSize: [35, 35],
     })
     return ICON
@@ -26,6 +26,7 @@ export default function Map({ markerList = [],
       click: ({ latlng = {} }) => {
         console.log(latlng.lat)
         setSelectedMarkerPosition([latlng.lat, latlng.lng])
+        console.log(latlng)
         handleClickMapCb && handleClickMapCb(latlng)
       },
     });
