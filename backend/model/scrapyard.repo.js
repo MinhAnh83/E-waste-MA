@@ -3,9 +3,11 @@
 
 const { con } = require('./index')
 class ScrapyardModel{
-    static getScrapyards = async () => {
+    static getScrapyards = async ({id}) => {
         return new Promise((resolve, reject) => {
-            con.query('SELECT * FROM scrapyards  ', function (error, results) {
+   let query='SELECT * FROM scrapyards '
+            if(id) query =query + `WHERE user_id = ${id}`
+            con.query(query, function (error, results) {
                 if (error) reject(error);
 
                 resolve(results)

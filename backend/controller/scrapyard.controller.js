@@ -1,13 +1,14 @@
 
 'use strict'
-const ScrapyardModel =require('../model/scrapyard.repo') 
+const ScrapyardModel = require('../model/scrapyard.repo')
 
 
-class ScrapyardController{
+class ScrapyardController {
     static getScrapyards = async (req, res, next) => {
         try {
+            const { id } = req.query;
 
-            const results = await ScrapyardModel.getScrapyards()
+            const results = await ScrapyardModel.getScrapyards({ id })
             // console.log(results)
             if (!results) throw new Error("Don't have data");
             res.status(200).json({
@@ -30,20 +31,20 @@ class ScrapyardController{
     static createScrapyard = async (req, res, next) => {
         try {
             const { address, name, image, langlat, open_time } = req.body;
-            const {user_id} =req.body
+            const { user_id } = req.body
             const result = await ScrapyardModel.createScrapyard({
                 address: address,
-                 name: name, 
-                 image: image,
-                 langlat: langlat,
-                   open_time:open_time ,
-                   user_id: user_id
+                name: name,
+                image: image,
+                langlat: langlat,
+                open_time: open_time,
+                user_id: user_id
             })
             if (!result) throw new Error("Can't create Scrapyard");
             res.status(200).json({
                 message: 'Create Crapyard success!',
                 data: result
-                  
+
             })
 
 
@@ -58,4 +59,4 @@ class ScrapyardController{
     }
 
 }
-module.exports=ScrapyardController
+module.exports = ScrapyardController

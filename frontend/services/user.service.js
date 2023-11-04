@@ -12,6 +12,10 @@ class UserService {
         console.log(`data:::`, fullname, email, password)
         return await Axios.post('/api/user/signup', {  fullname, email, password , phonenumber, address, role_id })
     }
+    static editUser = async ({email, fullname, phonenumber, address, image, id}) => {
+
+        return await Axios.post('/api/user/edit',{ email, fullname, phonenumber, address, image, id})
+    }
 }
 
 module.exports = UserService

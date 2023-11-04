@@ -66,7 +66,7 @@ export default function Post({ userData }) {
             <link rel="icon" href="/assets/img/logo1.PNG" />
         </Head>
             <main>
-                <Layout pages={layoutPages} user={{ fullname, email, name }}>
+                <Layout pages={layoutPages} user={{ fullname, email, name, image }}>
                    <div style={{marginTop: '30px'}}>
 
                    </div>

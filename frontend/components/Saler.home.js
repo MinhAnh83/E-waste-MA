@@ -41,7 +41,7 @@ export default function Saler({ userData }) {
         <>
             <div className="heading" style={{ marginTop: 20 }}>
                 <h2>MAP</h2>
-                <Map />
+                <Map markerList={[{ position: [10.861481, 108.6194982], popupcontent: "Quy Nhon" }]}/>
             </div>
            
             <div className="section flex flex-sb" >

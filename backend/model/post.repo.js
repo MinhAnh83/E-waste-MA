@@ -30,7 +30,8 @@ class PostModel {
     static getMyPosts = async ({user_id}) => {
         return new Promise((resolve, reject) => {
             let query='SELECT * FROM posts INNER JOIN  (SELECT id, fullname, email,  role_id, image as user_image FROM users) u ON posts.user_id=u.id WHERE user_id = ?'
-             con.query(query,[user_id], function (error, results) {
+             con.query(query,[user_id], function (error, results) { 
+                // truyen user_id là array -truyền array
                 if (error) reject(error);
 
                 resolve(results)

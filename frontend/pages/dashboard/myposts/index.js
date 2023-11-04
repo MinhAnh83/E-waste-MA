@@ -79,7 +79,7 @@ export default function Myposts({ userData }) {
             <link rel="icon" href="/assets/img/logo1.PNG" />
         </Head>
         <main>
-            <Layout pages={layoutPages} user={{ fullname, email, name }}>
+            <Layout pages={layoutPages} user={{ fullname, email, name, image }}>
                 <div className="nfts">
                     <div className="trending heading flex flex-sb " style={{ marginTop: "20px" }}>
                         <h2>Some Posts</h2>

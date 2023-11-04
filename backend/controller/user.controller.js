@@ -97,20 +97,19 @@ class UserController {
 
     static editUser = async (req, res, next) => {
         try {
-            const {  email, password, fullname, phonenumer, address, image } = req.body;
-            const { UserId } = req.query
+            const {  email,  fullname, phonenumber, address, image ,id} = req.body;
+            // const { id } = req.query
             const result = await UserModel.editUser({
                 email: email
-                , password: password
                 , fullname: fullname
-                , phonenumer:phonenumer
+                , phonenumber:phonenumber
                 , address: address
                 , image: image,
-                  id: UserId
+                  id: id
             })
             if (!result) throw new Error("Can't create User");
             res.status(200).json({
-                message: 'Create Users success!',
+                message: 'Edit Users success!',
                 data: result
             })
 

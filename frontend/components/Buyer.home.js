@@ -1,5 +1,6 @@
 import Head from 'next/head';
 import Script from 'next/script';
+import Image from 'next/image';
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
@@ -15,12 +16,41 @@ export default function Map() {
     const Map = dynamic(() => import("@/components/Map"), {
         ssr: false,
         loading: () => <p>Loading...</p>,
-    }); 
+    });
+    const [posts, setPosts] = useState([])
+    useEffect(() => {
+        refesh()
+    }, [])
+    const refesh = () => {
+        axios.get('/api/post?limit=10').then((response) => {
+            const { data } = response.data
+            console.log(data)
+            setPosts(data)
+        })
+    }
+    function formatMoney(amount, decimalCount = 2, decimal = ".", thousands = ",") {
+        try {
+            decimalCount = Math.abs(decimalCount);
+            decimalCount = isNaN(decimalCount) ? 2 : decimalCount;
+
+            const negativeSign = amount < 0 ? "-" : "";
+
+            let i = parseInt(amount = Math.abs(Number(amount) || 0).toFixed(decimalCount)).toString();
+            let j = (i.length > 3) ? i.length % 3 : 0;
+
+            return negativeSign +
+                (j ? i.substr(0, j) + thousands : '') +
+                i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + thousands) +
+                (decimalCount ? decimal + Math.abs(amount - i).toFixed(decimalCount).slice(2) : "");
+        } catch (e) {
+            console.log(e)
+        }
+    };
     return (
         <>
             <div className="heading" style={{ marginTop: 20 }}>
                 <h2>MAP</h2>
-                <Map markerList={[{position: [51.567, -0.09], popupcontent: "Ha Noi"}]} />
+                <Map markerList={[{ position: [51.567, -0.09], popupcontent: "Ha Noi" }]} />
             </div>
 
             <div className="section flex flex-sb" >
@@ -32,83 +62,48 @@ export default function Map() {
 
                         {/* <!-- =====Browse NFT===== --> */}
                         <div className="browse">
-                            <div className="nft">
-                                <img
-                                    src="https://raw.githubusercontent.com/programmercloud/nft-dashboard/main/img/nft-1.jpg"
-                                    alt=""
-                                />
-                                <div className="title">Weary Artwork</div>
-                                <div className="details flex flex-sb">
-                                    <div className="author flex">
-                                        <img
-                                            src="https://raw.githubusercontent.com/programmercloud/nft-dashboard/main/img/user.png"
-                                            alt=""
-                                        />
-                                        <p>Hassnain Haider</p>
-                                    </div>
-                                    <div className="price">4.5 ETH</div>
-                                </div>
-                            </div>
 
-                            <div className="nft">
-                                <img
-                                    src="https://raw.githubusercontent.com/programmercloud/nft-dashboard/main/img/nft-2.jpg"
-                                    alt=""
-                                />
-                                <div className="title">Spectrum of Color</div>
-                                <div className="details flex flex-sb">
-                                    <div className="author flex">
-                                        <img
-                                            src="https://raw.githubusercontent.com/programmercloud/nft-dashboard/main/img/user.png"
-                                            alt=""
-                                        />
-                                        <p>Hassnain Haider</p>
-                                    </div>
-                                    <div className="price">4 ETH</div>
-                                </div>
-                            </div>
+                            {posts.map((post, index) => {
+                                return (
 
-                            <div className="nft">
-                                <img
-                                    src="https://raw.githubusercontent.com/programmercloud/nft-dashboard/main/img/nft-3.jpg"
-                                    alt=""
-                                />
-                                <div className="title">Vivid Artwork</div>
-                                <div className="details flex flex-sb">
-                                    <div className="author flex">
-                                        <img
-                                            src="https://raw.githubusercontent.com/programmercloud/nft-dashboard/main/img/user.png"
-                                            alt=""
-                                        />
-                                        <p>Hassnain Haider</p>
-                                    </div>
-                                    <div className="price">3.5 ETH</div>
-                                </div>
-                            </div>
+                                    <div className="nft" key={index}>
 
-                            <div className="nft">
-                                <img
-                                    src="https://raw.githubusercontent.com/programmercloud/nft-dashboard/main/img/nft-4.jpg"
-                                    alt=""
-                                />
-                                <div className="title">Natures Love</div>
-                                <div className="details flex flex-sb">
-                                    <div className="author flex">
-                                        <img
-                                            src="https://raw.githubusercontent.com/programmercloud/nft-dashboard/main/img/user.png"
-                                            alt=""
-                                        />
-                                        <p>Hassnain Haider</p>
+                                        <div >
+                                            <Image
+                                                loader={() => { return post.image || "https://via.placeholder.com/100x100" }}
+                                                src="https://via.placeholder.com/100x100"
+                                                width={268}
+                                                height={254}
+                                                alt="Picture of the author"
+                                            />
+
+                                            <div className="title">{post.name}</div>
+                                            <div className="details flex flex-sb">
+                                                <div className="author flex">
+                                                    <img
+                                                        src="https://raw.githubusercontent.com/programmercloud/nft-dashboard/main/img/user.png"
+                                                        alt=""
+                                                    />
+                                                    <p>{post.fullname}</p>
+                                                </div>
+                                                <div className="price" style={{ fontSize: '10px' }}>{formatMoney(post.expect_price, 0) || 'Thương lượng'}</div>
+                                            </div>
+                                        </div>
+
                                     </div>
-                                    <div className="price">5 ETH</div>
-                                </div>
-                            </div>
+
+
+
+
+                                )
+                            })}
+
                         </div>
                     </div>
                 </div>
 
                 {/* <!-- Section Right --> */}
-                <div className="section-right">
+                <div className="section-right"style={{marginTop:'150px'}}>
                     {/* <div className="graph flex-c">
                             <p>Balance</p>
                             <h2>93,565.00</h2>

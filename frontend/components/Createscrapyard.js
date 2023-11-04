@@ -15,10 +15,11 @@ export default function Createscrapyard({ userData }) {
         address: null,
         name: null,
         image: null,
-        langlat: "500.4, -19",
+        langlat: null,
         open_time: null,
         user_id: id
     })
+    let selectedLatLng = null
  const Map = dynamic(() => import("@/components/Map"), {
         ssr: false,
         loading: () => <p>Loading...</p>,
@@ -27,7 +28,8 @@ export default function Createscrapyard({ userData }) {
         if(!File) return setErrMsg('Vu long them anh !!')
         uploadFileToStorage(File).then((imgURL)=>{
             createScrapyard.image=imgURL
-            console.log(imgURL)
+            createScrapyard.langlat = `${selectedLatLng.lat}, ${selectedLatLng.lng}`
+            console.log(createScrapyard)
           axios.post('/api/myscrapyard',{...createScrapyard}).then(()=>{
             // handleCreatedCB && handleCreatedCB()
             window.location.replace('/dashboard/myscrapyard')
@@ -41,6 +43,11 @@ export default function Createscrapyard({ userData }) {
         })
      
       }
+
+    const handleClickMapCb = (latlng) => {
+        console.log(latlng)
+        selectedLatLng = latlng
+    }  
     return (
         <>
         <p>Hello</p>
@@ -126,12 +133,11 @@ export default function Createscrapyard({ userData }) {
                                      setFile(e.target.files[0])
    console.log(e.target.files[0])
 
-                                    
-                               
                             }}
                         />
                     </Col>
-                    <Map markerList={[{ position: [10.861481, 108.6194982], popupcontent: "Quy Nhon" }]} style={{marginTop: '10px'}}/>
+                    <Map style={{marginTop: '10px'}}
+                    handleClickMapCb={handleClickMapCb}/>
                 </FormGroup>
             </Form>
             <Button style={{ fontSize: '12px' }} onClick={() => {

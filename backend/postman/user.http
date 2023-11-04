@@ -1,0 +1,25 @@
+### POST edit user
+POST http://localhost:3000/api/user
+content-type: application/json
+
+{ "email":"minhngoc@gmail.com",
+  "fullname":"Tran Thi Minh Ngoc",
+   "phonenumer": "09095277578", 
+   "address":"Thich Quang Duc, phuong 5, HCM",
+   "image": "123", 
+   "id": 3
+    
+}
+
+### POST edit user
+POST http://localhost:8000/api/user/edit
+content-type: application/json
+
+{  "email":"minhngoc@gmail.com",
+  "fullname":"Tran Minh Ngoc",
+   "phonenumer": "0909527757", 
+   "address":"Thich Quang Duc, phuong 5, HCM",
+   "image": "123", 
+   "id": 3
+    
+}

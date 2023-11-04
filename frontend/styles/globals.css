@@ -1080,3 +1080,21 @@ a:hover{
   background-color: DarkSalmon;
   color: white;
 }
+.profile_button_fix{
+  background: linear-gradient(to right, #52b788,#3a86ff);
+  padding: 4px;
+  border: none;
+ 
+  border-radius: 25px;
+  color: white;
+  font-size: 20px;
+  
+}
+.profile_button_fix:hover{
+  background: linear-gradient(to right,#3a86ff, #52b788 );
+}
+.profile_name{
+
+  color: #3c18dd;
+  letter-spacing: 1px;
+}

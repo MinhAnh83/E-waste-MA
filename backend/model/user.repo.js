@@ -25,10 +25,10 @@ class UserModel {
             })
         })
     }
-    static editUser = async ({ email, password, fullname, phonenumer, address, image, id }) => {
+    static editUser = async ({ email, password, fullname, phonenumber, address, image, id }) => {
         return new Promise((resolve, reject) => {
-            con.query('UPDATE users SET email = ?,password = ?, fullname =?, phonenumber =?, address =?, image=? WHERE id = ? '
-                , [email, password, fullname, phonenumer, address, image, id],
+            con.query('UPDATE users SET email = ?, fullname =?, phonenumber =?, address =?, image=? WHERE id = ? '
+                , [email, fullname, phonenumber, address, image, id],
                 function (error, results) {
                     if (error) reject(error)
                     resolve(results)

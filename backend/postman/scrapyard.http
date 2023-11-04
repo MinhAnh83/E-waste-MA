@@ -13,20 +13,17 @@ content-type: application/json
 }
 
 ### POST Create customer
-POST http://localhost:3000/api/scrapyard
+Get http://localhost:8000/api/scrapyard/get?id=2
+
 content-type: application/json
 
 { 
-     "address": "8 Phan Dinh Phung",
-"name": "vua Thu Nga", 
-"image": null,
- "langlat": "500.4, -19", 
- "open_time": "thu hai ",
- "user_id":4
+     
     
 }
 
 ### POST Create customer
-GET  http://localhost:8000/api/scrapyard/get
+
+GET  http://localhost:3000/api/myscrapyard?id=2
 content-type: application/json
 

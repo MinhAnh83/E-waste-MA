@@ -74,7 +74,7 @@ export default function Dashboard({ userData }) {
             {(name === 'saler') ?<Saler userData={userData}></Saler> : null }
 
             {(name === 'buyer') ?<BuyerHome ></BuyerHome> : null }
-            {(name === 'buyer') ?<BuyerHome ></BuyerHome> : null }
+      
             {(name === 'scrap yard owner') ?<ScrapyardHome ></ScrapyardHome> : null }
             </Layout>
             
