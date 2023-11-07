@@ -1,0 +1,26 @@
+### Post Request
+POST  http://localhost:8000/api/request/create
+content-type: application/json
+
+{
+    "post_id": "1", 
+"user_id":"1", 
+"expect_price":"200.000", 
+"comments":"toi muon mua",
+ "status":"approve" 
+    
+}
+
+### Post Request
+POST  http://localhost:3000/api/request/
+content-type: application/json
+
+{
+    "post_id": "2", 
+"user_id":"1", 
+"expect_price":"100.000", 
+"comments":"toi muon mua",
+ "status":"approve" 
+    
+}
+

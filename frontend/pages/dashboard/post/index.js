@@ -32,7 +32,7 @@ export async function getServerSideProps({ req, res }) {
 
 
 export default function Post({ userData }) {
-    const { fullname, name, email, accessApp } = userData;
+    const { fullname, name, email, accessApp , image} = userData;
     //name la ten cua role
     const [layoutPages, setLayoutPages] = useState([])
 

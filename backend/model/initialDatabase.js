@@ -17,7 +17,7 @@ connection(async () => {
         await PostModel.inittableToDb()
         await ScrapyardModel.initTableToDB()
         await PurchasingPriceModel.inittableToDb()
-        await RequestModel.inittableToDb()
+        await RequestModel.initTableToDB()
         console.log('All tables created success:::::')
     } catch(err) {
         console.log(err)

@@ -2,11 +2,11 @@
 const { google } = require('googleapis');
 const nodemailer = require('nodemailer')
 require('dotenv').config()
-
 const CLIENT_ID = process.env['CLIENT_ID']
 const CLIENT_SECRET = process.env['CLIENT_SECRET']
 const REDIRECT_URI = process.env['REDIRECT_URI']
 const REFESH_TOKEN = process.env['REFESH_TOKEN']
+const MAIL_CLOUD = process.env['MAIL_CLOUD']
 
 const oAuth2client = new google.auth.OAuth2(CLIENT_ID, CLIENT_SECRET, REDIRECT_URI)
 oAuth2client.setCredentials({ refresh_token: REFESH_TOKEN })
@@ -21,7 +21,7 @@ class MailHelper {
             service: "gmail",
             auth: {
                 type: `OAuth2`,
-                user: "ewastewebsite832@gmail.com",
+                user: MAIL_CLOUD,
                 clientId: CLIENT_ID,
                 clientSecret: CLIENT_SECRET,
                 refreshToken: REFESH_TOKEN,
