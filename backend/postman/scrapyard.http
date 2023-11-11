@@ -13,7 +13,7 @@ content-type: application/json
 }
 
 ### POST Create customer
-Get http://localhost:8000/api/scrapyard/get?id=2
+Get http://localhost:8000/api/scrapyard/get
 
 content-type: application/json
 
@@ -21,9 +21,11 @@ content-type: application/json
      
     
 }
-
+### Post Role
+POST  http://localhost:8000/api/scrapyard/delete?scrapyard_id=4
+content-type: application/json
 ### POST Create customer
 
-GET  http://localhost:3000/api/myscrapyard?id=2
+GET  http://localhost:3000/api/myscrapyard
 content-type: application/json
 
