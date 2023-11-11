@@ -10,6 +10,13 @@ content-type: application/json
    "id": 3
     
 }
+### Get  user
+GET  http://localhost:8000/api/user/get?user_id=1
+content-type: application/json
+
+### Get  user
+GET  http://localhost:3000/api/user?user_id=1
+content-type: application/json
 
 ### POST edit user
 POST http://localhost:8000/api/user/edit

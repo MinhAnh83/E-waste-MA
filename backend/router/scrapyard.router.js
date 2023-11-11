@@ -5,6 +5,6 @@ const ScrapyardController= require('../controller/scrapyard.controller')
 
 router.post("/create", ScrapyardController.createScrapyard)
 router.get("/get", ScrapyardController.getScrapyards)
-
+router.post("/delete", ScrapyardController.deleteScrapyard)
 
 module.exports = router;

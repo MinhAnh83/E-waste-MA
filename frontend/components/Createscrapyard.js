@@ -50,7 +50,6 @@ export default function Createscrapyard({ userData }) {
     }  
     return (
         <>
-        <p>Hello</p>
             <Form>
                 <FormGroup row>
                     <Label for="namepost" sm={4}>

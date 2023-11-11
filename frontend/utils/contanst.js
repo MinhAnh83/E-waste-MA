@@ -3,21 +3,21 @@ import { faShop, faNewspaper, faMagnifyingGlassLocation, faStore ,faCircleUser} 
 export const pages = [
     {
         key: "dashboard",
-        name: "Home page",
+        name: "Trang chủ",
         icon: <FontAwesomeIcon icon={faShop} style={{ width: '20px', height: '20px',  marginBottom: '12px' }} />,
         href: '/dashboard'
 
     },
     {
         key: "posts",
-        name: "Blog",
+        name: "Các bài đăng",
         icon: <FontAwesomeIcon icon={faNewspaper} style={{ width: '20px', height: '20px',   marginBottom: '12px' }} />,
         href: '/dashboard/post'
 
     },
     {
         key: "findbuyer",
-        name: "Find Buyers",
+        name: "Tìm người thu mua",
         icon: <FontAwesomeIcon icon={faMagnifyingGlassLocation} style={{ width: '20px', height: '20px',   marginBottom: '12px' }} />,
         href: '/dashboard/findbuyer'
         
@@ -25,7 +25,7 @@ export const pages = [
     },
     {
         key: "findscrapyard",
-        name: "Find Buyers",
+        name: "Tìm vựa ve chai",
         icon: <FontAwesomeIcon icon={faStore} style={{ width: '20px', height: '20px',   marginBottom: '12px' }} />,
         href: '/dashboard/saleplaces'
         
@@ -33,7 +33,7 @@ export const pages = [
     },
     {
         key: "myposts",
-        name: "Manage posts",
+        name: "Quản lí bài đăng",
         icon: <FontAwesomeIcon icon={faCircleUser} style={{ width: '20px', height: '20px',   marginBottom: '12px' }} />,
         href: '/dashboard/myposts'
         
@@ -41,7 +41,7 @@ export const pages = [
     },
     {
         key: "myscrapyard",
-        name: "Manage scrap yard",
+        name: "Quản lí vựa",
         icon: <FontAwesomeIcon icon={faCircleUser} style={{ width: '20px', height: '20px',   marginBottom: '12px' }} />,
         href: '/dashboard/myscrapyard'
         

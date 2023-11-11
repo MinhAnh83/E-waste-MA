@@ -13,6 +13,21 @@ content-type: application/json
     
 }
 
+### Post udatepost
+POST  http://localhost:3000/api/updatepost
+content-type: application/json
+
+{
+    
+    "name": "Máy tính DELL 15R ", 
+    "content":"Tôi cần bán máy tính hư đã qua sử dụng và tôi đã sử dụng nó 10 năm.  Máy còn mới 60% .", 
+    "expect_price": 100000, 
+    "items": null,
+    "image": "link", 
+    "post_id":10
+    
+}
+
 ### GET posts
 GET http://localhost:8000/api/post/get?limit=2&offset=0
 content-type: application/json
@@ -28,4 +43,24 @@ content-type: application/json
 ### GET posts
 GET http://localhost:8000/api/post/get
 
+content-type: application/json
+
+### Post Role
+POST  http://localhost:8000/api/post/delete?post_id=15
+content-type: application/json
+
+### Post Role
+POST  http://localhost:3000/api/deletepost?post_id=16
+content-type: application/json
+
+### Post Role
+POST  http://localhost:8000/api/post/movetotrash?post_id=1
+content-type: application/json
+
+### Post Role
+POST  http://localhost:3000/api/movetotrash?post_id=1
+content-type: application/json
+
+### Post Role
+POST  http://localhost:3000/api/outtrash?post_id=1
 content-type: application/json

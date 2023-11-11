@@ -26,15 +26,11 @@ const Narvbarhome = () => {
             </ul>
             <span className="navbar-text">
               <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-                <li className="nav-item">
-                  <a className={`nav-link active ${style['nav-link-cus']}`} aria-current="page" href="#">Sản phẩm </a>
-                </li>
+              
                 <li className="nav-item">
                   <a className={`nav-link ${style['nav-link-cus']}`}  href="#">Về chúng tôi</a>
                 </li>
-                <li className="nav-item">
-                  <a className={`nav-link ${style['nav-link-cus']}`} href="#">Người dùng</a>
-                </li>
+               
                 <li className="nav-item">
                 <Link  className={`nav-link ${style['nav-link-cus']}`} href="/login">Đăng nhập</Link>
                 </li>

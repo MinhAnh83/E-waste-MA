@@ -18,6 +18,27 @@ class PostService {
         if (userid) url = url + `user_id=${userid}`
         return await Axios.get(url)
     }
+    static updatePost = async ({ name, content, image, expect_price, items, status,post_id }) => {
+        let url = '/api/post/update'
+        return await Axios.post(url,{name, content, image, expect_price, items, status, post_id})
+    }
+    static movetoTrash = async ({ post_id }) => {
+        let url = '/api/post/movetotrash?'
+        if (post_id) url = url + `post_id=${post_id}`
+        return await Axios.post(url)
+    }
+    static outTrash = async ({ post_id }) => {
+        let url = '/api/post/outtrash?'
+        if (post_id) url = url + `post_id=${post_id}`
+        return await Axios.post(url)
+    }
+    static deletePost = async ({post_id}) => {
+            let url = '/api/post/delete?'   
+            if (post_id) url = url + `post_id=${post_id}`
+            return await Axios.post(url)
+        }
+    
+
 }
 
 module.exports = PostService

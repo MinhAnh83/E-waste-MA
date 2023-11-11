@@ -50,7 +50,7 @@ export default function Layout({ pages = [], user = {}, children }) {
                                     <Link href={nav.href}>
                                         <div className="icon">
                                             {nav.icon}
-                                            <p style={{ fontSize: '20px' }}>{nav.name}</p>
+                                            <p style={{ fontSize: '17px' }}>{nav.name}</p>
                                         </div>
 
                                     </Link>
@@ -67,7 +67,7 @@ export default function Layout({ pages = [], user = {}, children }) {
                                 <ion-icon name="log-out-outline"></ion-icon>
                             </div>
 
-                            <p>Logout</p>
+                            <p>Đăng xuất</p>
                         </div>
                     </div>
                 </div>
@@ -116,7 +116,7 @@ export default function Layout({ pages = [], user = {}, children }) {
             <Modal isOpen={modal} toggle={toggle} >
                 <ModalHeader toggle={toggle}>Profile</ModalHeader>
                 <ModalBody>
-                    <h4>Hello {user.fullname} !</h4>
+                    <h4>Xin chào {user.fullname} !</h4>
                     <p>Email: {user.email}</p>
 
                 </ModalBody>
@@ -125,7 +125,7 @@ export default function Layout({ pages = [], user = {}, children }) {
                     <Link href='/dashboard/profile'>
                         <div className="profile_button_fix" >
                           
-                            <p style={{ fontSize: '20px', marginTop: '10px'}}>Sửa profile</p>
+                            <p style={{ fontSize: '20px', marginTop: '10px', fontSize: "14px"}}>Sửa profile</p>
                         </div>
                     </Link>
                 </ModalFooter>

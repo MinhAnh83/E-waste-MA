@@ -14,6 +14,15 @@ class ScrapyardModel{
             })
         })
     }
+    static deleteScrapyard = async (scrapyard_id) => {
+        return new Promise((resolve, reject) => {
+            let query=`DELETE FROM scrapyards WHERE scrapyard_id = ?`
+            con.query(query,[scrapyard_id], function (error, results) {
+                if (error) reject(error);
+                resolve(results)
+            })
+        })
+    }
 
     static createScrapyard = async ({ address, name, image, langlat, open_time ,user_id}) => {
         console.log('init')

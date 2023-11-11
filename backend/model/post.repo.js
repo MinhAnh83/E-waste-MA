@@ -7,8 +7,19 @@ class PostModel {
         return new Promise((resolve, reject) => {
             con.query('INSERT INTO posts SET ?', {
                 user_id, name, content, image, expect_price, items,status,
-                createAt: new Date(), updateAt: new Date()
+                createAt: new Date(), updateAt: new Date(), 
             }, function (error, results, fields) {
+                if (error) reject(error)
+                resolve(results)
+            })
+        })
+    }
+    static updatePost = async ({ name, content, image, expect_price, items,status='draft', post_id}) => {
+        return new Promise((resolve, reject) => {
+            var nowdate = new Date();
+            con.query('UPDATE posts SET name= ? ,content= ? ,image= ? ,expect_price= ? ,items= ? , status= ?, updateAt =? WHERE post_id = ?', [  
+                 name, content, image, expect_price, items,status, new Date(), post_id]
+            , function (error, results, fields) {
                 if (error) reject(error)
                 resolve(results)
             })
@@ -21,6 +32,35 @@ class PostModel {
             if(limit) query = query + ` LIMIT ${limit}`
             if (offset) query = query + ` OFFSET ${offset}`
             con.query(query, function (error, results) {
+                if (error) reject(error);
+
+                resolve(results)
+            })
+        })
+    }
+    static movetoTrash = async ({post_id}) => {
+        return new Promise((resolve, reject) => {
+            let query=`UPDATE posts SET is_deleted= 1 WHERE post_id= ? `
+            con.query(query,[post_id], function (error, results) {
+                if (error) reject(error);
+                resolve(results)
+            })
+        })
+    }
+
+    static outTrash = async ({post_id}) => {
+        return new Promise((resolve, reject) => {
+            let query=`UPDATE posts SET is_deleted= 0 WHERE post_id= ? `
+            con.query(query,[post_id], function (error, results) {
+                if (error) reject(error);
+                resolve(results)
+            })
+        })
+    }
+    static deletePost = async (post_id) => {
+        return new Promise((resolve, reject) => {
+            let query=`DELETE FROM posts WHERE post_id = ?`
+            con.query(query,[post_id], function (error, results) {
                 if (error) reject(error);
 
                 resolve(results)

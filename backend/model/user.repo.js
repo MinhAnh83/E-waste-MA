@@ -16,9 +16,11 @@ class UserModel {
                 })
         })
     }
-    static getUser = async () => {
+    static getUser = async ({user_id}) => {
         return new Promise((resolve, reject) => {
-            con.query('SELECT * FROM users', function (error, results, fields) {
+            let query ='SELECT * FROM users'
+            if(user_id) query = query + ` WHERE id=${user_id}`
+            con.query(query, function (error, results, fields) {
                 if (error) reject(error)
 
                 resolve(results)

@@ -28,6 +28,30 @@ class ScrapyardController {
 
 
     }
+    static deleteScrapyard = async (req, res, next) => {
+        try {
+            const {scrapyard_id} = req.query
+            const results = await ScrapyardModel.deleteScrapyard(scrapyard_id)
+            // console.log(results)
+            if (!results) throw new Error("Don't delete scrapyard");
+            res.status(200).json({
+                message: 'delete scrapyard success!',
+                data: results
+            })
+
+        }
+        catch (err) {
+            console.log(err)
+            res.status(500).json({
+                code: 500,
+                message: 'Error::: c',
+                error: err.message
+            })
+        }
+
+
+    }
+
     static createScrapyard = async (req, res, next) => {
         try {
             const { address, name, image, langlat, open_time } = req.body;

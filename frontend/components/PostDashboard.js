@@ -29,40 +29,49 @@ export default function PostDashboard({ posts }) {
         <>
             <div className="nfts">
                 <div className="trending heading flex flex-sb " style={{ marginTop: "20px" }}>
-                    <h2>Some Posts</h2>
+                    <h2>Các bài đăng gần đây nhất</h2>
                 </div>
 
                 {/* <!-- =====Browse NFT===== --> */}
                 <div className="browse">
 
                     {data.map((post, index) => {
+
                         return (
-
-                            <div className="nft" key={index}>
-
+                          <>
+                          {post && post.is_deleted===0 ? 
+                             <div className="nft" key={index}>
+                             {post && post.is_deleted === 0 ? 
                                 <div >
-                                    <Image
-                                        loader={() => { return post.image || "https://via.placeholder.com/100x100" }}
-                                        src="https://via.placeholder.com/100x100"
-                                        width={268}
-                                        height={254}
-                                        alt="Picture of the author"
-                                    />
+                                <Image
+                                    loader={() => { return post.image || "https://via.placeholder.com/100x100" }}
+                                    src="https://via.placeholder.com/100x100"
+                                    width={268}
+                                    height={254}
+                                    alt="Picture of the author"
+                                />
 
-                                    <div className="title">{post.name}</div>
-                                    <div className="details flex flex-sb">
-                                        <div className="author flex">
-                                            <img
-                                                src="https://raw.githubusercontent.com/programmercloud/nft-dashboard/main/img/user.png"
-                                                alt=""
-                                            />
-                                            <p>{post.fullname}</p>
-                                        </div>
-                                        <div className="price" style={{ fontSize: '10px' }}>{formatMoney(post.expect_price, 0) || 'Thương lượng'}</div>
+                                <div className="title">{post.name}</div>
+                                <div className="details flex flex-sb">
+                                    <div className="author flex">
+                                        <img
+                                            src="https://raw.githubusercontent.com/programmercloud/nft-dashboard/main/img/user.png"
+                                            alt=""
+                                        />
+                                        <p>{post.fullname}</p>
                                     </div>
+                                    <div className="price" style={{ fontSize: '10px' }}>{formatMoney(post.expect_price, 0) || 'Thương lượng'}</div>
                                 </div>
+                            </div> 
+                             
+                             :null}
 
-                            </div>
+                        
+                       </div>: null
+                        }
+                        
+                          </>
+                           
 
 
 

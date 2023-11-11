@@ -32,7 +32,7 @@ export async function getServerSideProps({ req, res }) {
   };
 }
 
-export default function Myposts({ userData }) {
+export default function Myscrapyard({ userData }) {
   const { fullname, name, email, accessApp, id , image} = userData;
   console.log('Datacua user',userData)
   const [Myscrapyards, setMyscrapyards] = useState([])
@@ -114,7 +114,7 @@ const Movecenter=(index)=> {
           <Link href="/dashboard/myscrapyard" onClick={onRefresh} style={{marginRight: '10px', position: 'absolute',
     right: '0px'}}>
             <FontAwesomeIcon icon={faPlus} style={{ width: '20px', height: '20px', marginBottom: '3px' }} />
-            Lam moi</Link>
+            Làm mới</Link>
         </div>
 
         <div className="table_scrapyard" style={{ marginTop: "20px" }}>
@@ -125,16 +125,16 @@ const Movecenter=(index)=> {
                   ID
                 </th>
                 <th>
-                  Name
+                  Tên
                 </th>
                 <th>
-                  Address
+                  Địa chỉ
                 </th>
                 <th>
-                  Open time
+                  Thời gian mở cửa
                 </th>
                 <th>
-                  Image
+                  Hình ảnh
                 </th>
               </tr>
             </thead>

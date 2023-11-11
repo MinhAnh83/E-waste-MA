@@ -42,8 +42,8 @@ class UserController {
 
     static getUsers = async (req, res, next) => {
         try {
-
-            const results = await UserModel.getUser()
+        const{user_id} = req.query;
+            const results = await UserModel.getUser({user_id})
             // console.log(results)
             if (!results) throw new Error("Don't have data");
             res.status(200).json({

@@ -18,12 +18,29 @@ export default function ScrapyardHome({ userData }) {
         loading: () => <p>Loading...</p>,
     });
     const [posts, setPosts] = useState([])
+    const [Scrapyards, setScrapyards] = useState([])
     useEffect(() => {
         refesh()
+        onRefresh()
     }, [])
     const refesh = () => {
        
     }
+    const onRefresh = () => {
+        axios.get(`/api/myscrapyard`).then((response) => {
+          const { data } = response.data;
+          console.log('danh sachy', data)
+          data.forEach((d) => {
+            d["position"] = d.langlat.split(', ')
+            d["popupContent"] = `
+             ${d.name}\
+            ${d.address}
+            `
+            // them 2 cai key la position va popupContent vao Myscarpyard
+          })
+          setScrapyards(data)
+        })
+      }
     const handleCreatedCB = () => {
         setModal(false)
         refesh()
@@ -35,8 +52,10 @@ export default function ScrapyardHome({ userData }) {
     return (
         <>
             <div className="heading" style={{ marginTop: 20 }}>
-                <h2>MAP</h2>
-                <Map markerList={[{ position: [10.861481, 108.6194982], popupcontent: "Quy Nhon" }]}/>
+                <h2>Địa chỉ các vựa ve chai </h2>
+                <Map markerList={Scrapyards} center={(() => {
+            return Scrapyards && Scrapyards[0] && Scrapyards[0].position
+          })()}/>
             </div>
            
             <div className="section flex flex-sb" >
@@ -52,7 +71,7 @@ export default function ScrapyardHome({ userData }) {
 
                     <div className="top-creators" style={{marginTop:'20px'}}>
                         <div className="heading flex flex-sb">
-                            <h2>Top Salers</h2>
+                            <h2>Bảng xếp hạng người thu mua</h2>
                             <p >See all</p>
                         </div>
 

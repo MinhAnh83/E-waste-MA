@@ -24,8 +24,7 @@ const Footer = () => {
                     <h4>PAGE</h4>
                     <ul className={styles.linkGroup}>
                         <li>  <Link className={styles.linkFooter}  href="/login">Đăng nhập</Link></li>
-                        <li><Link  className={styles.linkFooter}   href="/login">Đăng ký</Link></li>
-                        <li> <Link  className={styles.linkFooter}   href="/login">Người dùng</Link></li>
+                        <li><Link  className={styles.linkFooter}   href="/register">Đăng ký</Link></li>
                         <li>   <Link   className={styles.linkFooter}  href="/login">Về chúng tôi</Link></li>
 
                     </ul>
