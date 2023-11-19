@@ -12,7 +12,13 @@ class ScrapyardService {
         return await Axios.get(url)
     }
    
+static deleteScrapyard = async({scrapyard_id})=>{
 
+    return await Axios.post(`/api/scrapyard/delete?scrapyard_id=${scrapyard_id}`)
+}
+static updateScrapyard=async({name, address, image, langlat, open_time, scrapyard_id})=>{
+    return await Axios.post(`/api/scrapyard/update`,{name, address, image, langlat, open_time, scrapyard_id})
+}
    
 }
 

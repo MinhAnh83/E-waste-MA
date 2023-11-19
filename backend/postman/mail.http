@@ -1,5 +1,5 @@
 ### Post Mail
-POST  http://localhost:3000/api/mail
+POST  http://localhost:8000/api/mail/create
 content-type: application/json
 
 { 
@@ -7,6 +7,4 @@ content-type: application/json
  "subject": "Hello",
   "text":"Xin chao ban",
    "html":"<h2> Chao xin</h2>" 
-    
-    
 }

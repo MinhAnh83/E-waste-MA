@@ -53,6 +53,7 @@ export default function Myposts({ userData }) {
         setModal(!modal);
         console.log(post)
         setSelectedPost(post)
+        
        
     }
     //name la ten cua role

@@ -32,6 +32,10 @@ content-type: application/json
 GET http://localhost:8000/api/post/get?limit=2&offset=0
 content-type: application/json
 
+### GET postsdetail
+GET http://localhost:3000/api/post/detailpost?post_id=24
+content-type: application/json
+
 ### GET posts
 GET http://localhost:3000/api/post
 content-type: application/json

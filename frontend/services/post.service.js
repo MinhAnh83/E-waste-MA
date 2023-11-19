@@ -13,6 +13,11 @@ class PostService {
         return await Axios.get(url)
     }
 
+    static getDetailPost = async ({ post_id }) => {
+        let url = `/api/post/get/detailpost?post_id= ${post_id}`
+   
+        return await Axios.get(url)
+    }
     static getMyPost = async ({ userid }) => {
         let url = '/api/post/get/myposts?'
         if (userid) url = url + `user_id=${userid}`

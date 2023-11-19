@@ -14,6 +14,17 @@ class ScrapyardModel{
             })
         })
     }
+    static updateScrapyard = async ({  name, address, image, langlat, open_time, scrapyard_id}) => {
+        return new Promise((resolve, reject) => {
+
+            con.query('UPDATE scrapyards SET name= ? ,address= ? ,image= ? ,langlat= ? , open_time= ? WHERE scrapyard_id = ?', [  
+                name,address,  image, langlat, open_time, scrapyard_id]
+            , function (error, results, fields) {
+                if (error) reject(error)
+                resolve(results)
+            })
+        })
+    }
     static deleteScrapyard = async (scrapyard_id) => {
         return new Promise((resolve, reject) => {
             let query=`DELETE FROM scrapyards WHERE scrapyard_id = ?`

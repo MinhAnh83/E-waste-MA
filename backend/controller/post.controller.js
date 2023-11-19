@@ -3,7 +3,7 @@
 const PostModel = require('../model/post.repo')
 
 class PostController {
-
+    
     static createPost = async (req, res, next) => {
         try {
             const { user_id, name, content, image, expect_price, items, status } = req.body;
@@ -59,6 +59,29 @@ class PostController {
             if (!results) throw new Error("Don't have data");
             res.status(200).json({
                 message: 'Get posts success!',
+                data: results
+            })
+
+        }
+        catch (err) {
+            console.log(err)
+            res.status(500).json({
+                code: 500,
+                message: 'Error::: c',
+                error: err.message
+            })
+        }
+
+
+    }
+    static getDetailPost = async (req, res, next) => {
+        try {
+            const {post_id} = req.query
+            const results = await PostModel.getDetailPost({post_id})
+            // console.log(results)
+            if (!results) throw new Error("Don't have data");
+            res.status(200).json({
+                message: 'Get detail post success!',
                 data: results
             })
 

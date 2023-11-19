@@ -82,5 +82,29 @@ class ScrapyardController {
         }
     }
 
+    static updateScrapyard = async (req, res, next) => {
+        try {
+            
+            const { name, address, image, langlat, open_time, scrapyard_id} = req.body;
+            const result = await ScrapyardModel.updateScrapyard({
+
+                name, address, image, langlat, open_time, scrapyard_id
+        })
+            if (!result) throw new Error("Can't update scrapyard");
+            res.status(200).json({
+                message: 'Update scrapyard success!',
+                data: result
+            })
+
+        }
+        catch (err) {
+            res.status(500).json({
+                code: 500,
+                message: 'Error:::',
+                error: err.message
+            })
+        }
+    }
+
 }
 module.exports = ScrapyardController

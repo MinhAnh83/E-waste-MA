@@ -12,14 +12,16 @@ import { NextResponse } from 'next/server'
 import { pages } from '@/utils/contanst'
 
 
-export default function Map() {
+export default function Buyer() {
     const Map = dynamic(() => import("@/components/Map"), {
         ssr: false,
         loading: () => <p>Loading...</p>,
     });
     const [posts, setPosts] = useState([])
+    const [Scrapyards, setScrapyards] = useState([])
     useEffect(() => {
         refesh()
+        onRefresh()
     }, [])
     const refesh = () => {
         axios.get('/api/post?limit=10').then((response) => {
@@ -28,6 +30,22 @@ export default function Map() {
             setPosts(data)
         })
     }
+    const onRefresh = () => {
+        axios.get(`/api/myscrapyard`).then((response) => {
+            const { data } = response.data;
+            console.log('danh sachy', data)
+            data.forEach((d) => {
+                d["position"] = d.langlat.split(', ')
+                d["popupContent"] = `
+             ${d.name}\
+            ${d.address}
+            `
+                // them 2 cai key la position va popupContent vao Myscarpyard
+            })
+            setScrapyards(data)
+        })
+    }
+   
     function formatMoney(amount, decimalCount = 2, decimal = ".", thousands = ",") {
         try {
             decimalCount = Math.abs(decimalCount);
@@ -48,16 +66,18 @@ export default function Map() {
     };
     return (
         <>
-            <div className="heading" style={{ marginTop: 20 }}>
-                <h2>MAP</h2>
-                <Map markerList={[{ position: [51.567, -0.09], popupcontent: "Ha Noi" }]} />
+            <div className="heading" style={{ marginTop: '20px', textAlign: 'center' }}>
+                <h2>Địa chỉ các vựa thu gom</h2>
+                <Map markerList={Scrapyards} center={(() => {
+                    return Scrapyards && Scrapyards[0] && Scrapyards[0].position
+                })()} />
             </div>
 
             <div className="section flex flex-sb" >
                 <div className="section-left">
                     <div className="nfts">
                         <div className="trending heading flex flex-sb " style={{ marginTop: "20px" }}>
-                            <h2>Some Posts</h2>
+                            <h2>Các bài đăng phổ biến</h2>
                         </div>
 
                         {/* <!-- =====Browse NFT===== --> */}
@@ -68,7 +88,7 @@ export default function Map() {
 
                                     <div className="nft" key={index}>
 
-                                        <div >
+                                        <div>
                                             <Image
                                                 loader={() => { return post.image || "https://via.placeholder.com/100x100" }}
                                                 src="https://via.placeholder.com/100x100"
@@ -78,16 +98,22 @@ export default function Map() {
                                             />
 
                                             <div className="title">{post.name}</div>
-                                            <div className="details flex flex-sb">
+                                            <Link  href={`/dashboard/detailPost/${post.post_id}`} style={{ textDecoration: 'underline', marginTop: '7px', fontSize: '15px', color: '#77cdff' }}>Xem chi tiết</Link>
+                                            <div className="details flex flex-sb" style={{ marginTop: '7px' }}>
                                                 <div className="author flex">
                                                     <img
                                                         src="https://raw.githubusercontent.com/programmercloud/nft-dashboard/main/img/user.png"
                                                         alt=""
                                                     />
+
                                                     <p>{post.fullname}</p>
+
                                                 </div>
-                                                <div className="price" style={{ fontSize: '10px' }}>{formatMoney(post.expect_price, 0) || 'Thương lượng'}</div>
+                                                <div className="price" style={{ fontSize: '10px' }}>{formatMoney(post.expect_price, 0) || 'Thương lượng'}</div> <hr />
+
+
                                             </div>
+
                                         </div>
 
                                     </div>
@@ -103,7 +129,7 @@ export default function Map() {
                 </div>
 
                 {/* <!-- Section Right --> */}
-                <div className="section-right"style={{marginTop:'150px'}}>
+                <div className="section-right" style={{ marginTop: '150px' }}>
                     {/* <div className="graph flex-c">
                             <p>Balance</p>
                             <h2>93,565.00</h2>

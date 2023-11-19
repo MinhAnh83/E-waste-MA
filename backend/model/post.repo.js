@@ -38,6 +38,16 @@ class PostModel {
             })
         })
     }
+    static getDetailPost = async ({post_id}) => {
+        return new Promise((resolve, reject) => {
+            let query=`SELECT * FROM posts  INNER JOIN  (SELECT id, fullname, email, phonenumber, address, role_id, image as user_image FROM users) u ON posts.user_id=u.id WHERE post_id = ${post_id}`
+            con.query(query, function (error, results) {
+                if (error) reject(error);
+
+                resolve(results)
+            })
+        })
+    }
     static movetoTrash = async ({post_id}) => {
         return new Promise((resolve, reject) => {
             let query=`UPDATE posts SET is_deleted= 1 WHERE post_id= ? `

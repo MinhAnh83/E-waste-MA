@@ -12,7 +12,8 @@ import { faPlus } from '@fortawesome/free-solid-svg-icons'
 import { NextResponse } from 'next/server'
 import { pages } from '@/utils/contanst'
 import Createscrapyard from '@/components/Createscrapyard';
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Table } from 'reactstrap';
+import Updatescrapyard from '@/components/Updatescrapyard';
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Table, Form, FormGroup, Label, Col, Input } from 'reactstrap';
 //  import '@/styles/globals.css'
 //import { BsSun, BsFillMoonStarsFill, BsFillBellFill,BsFillGridFill } from "react-icons/bs"
 
@@ -33,8 +34,10 @@ export async function getServerSideProps({ req, res }) {
 }
 
 export default function Myscrapyard({ userData }) {
-  const { fullname, name, email, accessApp, id , image} = userData;
-  console.log('Datacua user',userData)
+  const { fullname, name, email, accessApp, id, image } = userData;
+  console.log('Datacua user', userData)
+  const [File, setFile] = useState(null)
+  const [errMsg, setErrMsg] = useState(null)
   const [Myscrapyards, setMyscrapyards] = useState([])
   //name la ten cua role
   const [layoutPages, setLayoutPages] = useState([])
@@ -64,7 +67,20 @@ export default function Myscrapyard({ userData }) {
 
   }
   const [modal, setModal] = useState(false);
+  const [modal1, setModal1] = useState(false);
+  const [modal2, setModal2] = useState(false);
+  const [deleteid, setDeleteid] = useState({});
+  const [scrapyardSelected, setScrapyardSelected] = useState({});
+  const toggle1 = (id) => {
+    setModal1(!modal1)
+    setDeleteid(id)
+  }
+  const toggle2 = (scrapyard) => {
+    console.log('test:::', scrapyard)
 
+    setScrapyardSelected(scrapyard)
+    setModal2(!modal2)
+  }
   const toggle = () => setModal(!modal);
 
   const onRefresh = () => {
@@ -82,13 +98,18 @@ export default function Myscrapyard({ userData }) {
       setMyscrapyards(data)
     })
   }
-const Movecenter=(index)=> {
-<Map markerList={Myscrapyards} center={(() => {
-            return Myscrapyards && Myscrapyards[index] && Myscrapyards[index].position
-          })()}/>
-}
+  const Movecenter = (index) => {
+    <Map markerList={Myscrapyards} center={(() => {
+      return Myscrapyards && Myscrapyards[index] && Myscrapyards[index].position
+    })()} />
+  }
+  const handleUpdate = (id) => {
 
+  }
 
+  const handleDelete = (id) => {
+    axios.post(`/api/myscrapyard/delete?scrapyard_id=${id}`)
+  }
   return <>
     <Head>
       <title>Quản lí vựa</title>
@@ -99,20 +120,22 @@ const Movecenter=(index)=> {
     <main>
       <Layout pages={layoutPages} user={{ fullname, email, name, image }} >
         <div className="heading" style={{ marginTop: 20 }}>
-          <h2>Quản lí vựa ve chai</h2>
+          <h2 style={{ textAlign: "center", padding: "10px" }}>Quản lí vựa ve chai</h2>
           <Map markerList={Myscrapyards} center={(() => {
             return Myscrapyards && Myscrapyards[0] && Myscrapyards[0].position
-          })()}/>
+          })()} />
           {/* IIFE giup chay lam luon khoi can goi */}
         </div>
 
 
-        <div style={{ marginTop: '40px', position:'relative' }}>
+        <div style={{ marginTop: '40px', position: 'relative' }}>
           <Link href="/dashboard/myscrapyard" onClick={toggle} >
             <FontAwesomeIcon icon={faPlus} style={{ width: '20px', height: '20px', marginBottom: '3px', marginRight: '10px' }} />
             Thêm vựa</Link>
-          <Link href="/dashboard/myscrapyard" onClick={onRefresh} style={{marginRight: '10px', position: 'absolute',
-    right: '0px'}}>
+          <Link href="/dashboard/myscrapyard" onClick={onRefresh} style={{
+            marginRight: '10px', position: 'absolute',
+            right: '0px'
+          }}>
             <FontAwesomeIcon icon={faPlus} style={{ width: '20px', height: '20px', marginBottom: '3px' }} />
             Làm mới</Link>
         </div>
@@ -136,22 +159,25 @@ const Movecenter=(index)=> {
                 <th>
                   Hình ảnh
                 </th>
+                <th>
+
+                </th>
               </tr>
             </thead>
             <tbody>
               {Myscrapyards && Myscrapyards.map((myscrapyards, index) => {
                 return (
-                  <tr onClick={(index)=>{Movecenter(index)}} key={index}>
+                  <tr onClick={(index) => { Movecenter(index) }} key={index}>
                     <th scope="row">
                       {myscrapyards.scrapyard_id}
                     </th>
-                    <td>
+                    <td style={{ fontSize: "15px" }}>
                       {myscrapyards.name}
                     </td>
-                    <td>
+                    <td style={{ fontSize: "14px" }}>
                       {myscrapyards.address}
                     </td>
-                    <td>
+                    <td style={{ fontSize: "14px" }}>
                       {myscrapyards.open_time}
                     </td>
                     <td>
@@ -166,6 +192,12 @@ const Movecenter=(index)=> {
 
 
                     </td>
+                    <td>
+                      <button className='delete-button' onClick={(e) => { toggle1(myscrapyards.scrapyard_id) }}>Xóa</button>
+                    </td>
+                    <td>
+                      <button className='cancel-button' onClick={(e) => { toggle2(myscrapyards) }}>Sửa</button>
+                    </td>
                   </tr>
                 )
               })}
@@ -175,7 +207,20 @@ const Movecenter=(index)=> {
           </Table>
         </div>
       </Layout>
-
+      <Modal isOpen={modal1} toggle1={toggle1} >
+        <ModalHeader toggle1={toggle1}>Thông báo !!</ModalHeader>
+        <ModalBody>
+          Bạn có chắc chắn muốn xóa không vì khi xóa thì bạn sẽ không phục hồi được.
+        </ModalBody>
+        <ModalFooter>
+          <button className='delete-button' style={{ background: '#ef9090' }} onClick={(e) => { handleDelete(deleteid) }}>
+            Xóa
+          </button>
+          <button color="secondary" className='cancel-button' onClick={toggle1}>
+            Thoát
+          </button>
+        </ModalFooter>
+      </Modal>
       {/* <!-- ======Section======= --> */}
 
       {/* <!-- ======End Section======= --> */}
@@ -188,6 +233,19 @@ const Movecenter=(index)=> {
         <Createscrapyard userData={userData}></Createscrapyard>
       </ModalBody>
 
+    </Modal>
+
+    <Modal isOpen={modal2} toggle={toggle2} >
+      <ModalHeader toggle={toggle2}>Sửa thông tin vựa</ModalHeader>
+      <ModalBody>
+        <Updatescrapyard scrapyardSelected={scrapyardSelected}></Updatescrapyard>
+      </ModalBody>
+      <ModalFooter>
+       
+        <button color="secondary" className='cancel-button' onClick={toggle2}>
+          Thoát
+        </button>
+      </ModalFooter>
     </Modal>
     <Script src="/js/dashboard.js"></Script>
   </>

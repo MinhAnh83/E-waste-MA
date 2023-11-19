@@ -12,5 +12,6 @@ router.post("/update", PostController.updatePost)
 
 router.get("/get",  PostController.getPosts)
 router.get("/get/myposts", PostController.getMyPosts)
+router.get("/get/detailpost", PostController.getDetailPost)
 
 module.exports = router;
