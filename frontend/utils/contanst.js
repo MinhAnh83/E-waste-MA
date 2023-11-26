@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faShop, faNewspaper, faMagnifyingGlassLocation, faStore ,faCircleUser} from '@fortawesome/free-solid-svg-icons'
+import { faShop, faNewspaper, faMagnifyingGlassLocation, faStore ,faCircleUser, faMessage} from '@fortawesome/free-solid-svg-icons'
 export const pages = [
     {
         key: "dashboard",
@@ -46,5 +46,11 @@ export const pages = [
         href: '/dashboard/myscrapyard'
         
 
+    },
+    {
+        key: "chatbox",
+        name: "Trò chuyện",
+        icon: <FontAwesomeIcon icon={faMessage} style={{ width: '20px', height: '20px',   marginBottom: '12px' }} />,
+        href: '/dashboard/chatbox'
     }
 ]

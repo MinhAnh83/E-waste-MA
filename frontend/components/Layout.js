@@ -77,7 +77,7 @@ export default function Layout({ pages = [], user = {}, children }) {
                             <div className="icon">
                                 <ion-icon name="search-outline"></ion-icon>
                             </div>
-                            <input type="text" placeholder=" Search any collection" />
+                            <input type="text" placeholder=" Tìm kiếm " />
                         </div>
 
                         <div className="theme flex">

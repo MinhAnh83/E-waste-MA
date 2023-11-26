@@ -57,7 +57,7 @@ export default function Saler({ userData }) {
 
     return (
         <>
-            <div className="heading" style={{ marginTop: 20 }}>
+            <div className="heading" style={{ marginTop: '20px' }}>
                 <h2>Bản đồ vị tri các vựa ve chai</h2>
                 <Row>
                     <Col xs="9">

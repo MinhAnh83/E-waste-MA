@@ -345,7 +345,7 @@ export default function Myposts({ userData }) {
 
 
                             )
-                        }) : <p>Không có bài đăng</p>}
+                        }) : <p>Thùng rác trống</p>}
 
 
 

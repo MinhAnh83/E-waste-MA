@@ -18,7 +18,7 @@ class UserModel {
     }
     static getUser = async ({user_id}) => {
         return new Promise((resolve, reject) => {
-            let query ='SELECT * FROM users'
+            let query ='SELECT * FROM users INNER JOIN roles ON users.role_id = roles.role_id'
             if(user_id) query = query + ` WHERE id=${user_id}`
             con.query(query, function (error, results, fields) {
                 if (error) reject(error)

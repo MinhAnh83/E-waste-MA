@@ -7,17 +7,15 @@ import { useRouter } from 'next/router'
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Axios from '@/helper/axios.helper'
-import dynamic from 'next/dynamic'
+
 import Layout from '@/components/Layout';
-import { faPlus, faPhoneVolume, faHeadset, faComments, faTriangleExclamation, faClock, faLocationDot, faCheck } from '@fortawesome/free-solid-svg-icons'
+import { faPhoneVolume, faHeadset, faComments, faTriangleExclamation, faClock, faLocationDot, faCheck } from '@fortawesome/free-solid-svg-icons'
 import { NextResponse } from 'next/server'
 import { pages } from '@/utils/contanst'
 import Createscrapyard from '@/components/Createscrapyard';
 import Updatescrapyard from '@/components/Updatescrapyard';
-import { Button, Row, Modal, ModalHeader, ModalBody, ModalFooter, Table, Form, FormGroup, Label, Col, Input, Card, CardTitle, CardSubtitle, CardText, CardBody } from 'reactstrap';
-import { NULL } from 'sass';
-//  import '@/styles/globals.css'
-//import { BsSun, BsFillMoonStarsFill, BsFillBellFill,BsFillGridFill } from "react-icons/bs"
+import { Button, Row, Col, Input, Card, CardTitle, CardSubtitle, CardText, CardBody } from 'reactstrap';
+
 
 export async function getServerSideProps({ req, res }) {
   const token = req.cookies["vechaitoken"];
@@ -41,6 +39,7 @@ export default function DetailPost({ userData }) {
   const { fullname, name, email, accessApp, id, image } = userData;
   const [post, setPost] = useState([])
   const [User, setUser] = useState([])
+  const [PostUser, setPostUser] = useState([])
 
   const [layoutPages, setLayoutPages] = useState(null)
   let userpost = null;
@@ -62,6 +61,21 @@ export default function DetailPost({ userData }) {
 
   }, [])
 
+  const [sendmail, setsendMail] = useState({
+    to: null,
+    subject: null,
+    text: "Xin chao ban",
+    html: null
+  })
+  const sendMail = (userid) => {
+    sendmail.to = User[0].email
+    sendmail.html = `<h3>Tôi muốn mua </h3>
+<p>Hãy liên lạc với tôi dưa trên các thông tin này</p>
+  <a src="http://localhost:3000/dashboard/approve?user_id=${id}">Chap nhan</a>
+  `
+    sendmail.subject = `Người mua ${id} muốn mua sản phẩm`
+    axios.post('/api/mail', { ...sendmail })
+  }
   const refesh = () => {
     axios.get(`/api/post/detailpost?post_id=${router.query.post_id}`).then(async (response) => {
       const { data } = response.data;
@@ -78,7 +92,15 @@ export default function DetailPost({ userData }) {
       axios.get(`/api/user?user_id=${userId}`).then((response) => {
         const { data } = response.data;
         setUser(data)
-        console.log('daadd', data)
+        console.log('userdata', data)
+        return data[0].id
+      }).then((userId) => {
+        axios.get(`/api/mypost?userid=${userId}`).then((response) => {
+          const { data } = response.data;
+          setPostUser(data)
+          console.log('postofuser', data)
+
+        })
       })
     })
   }
@@ -87,12 +109,15 @@ export default function DetailPost({ userData }) {
   return (
     <>
       <Layout pages={layoutPages} user={{ fullname, email, name, image }} >
-        <h3>Hello</h3>
+
         {post ? post.map((post, index) => {
           return (
-            <div key={index}>
+            <div key={index} style={{ marginTop: '20px' }}>
+              <div style={{ textAlign: 'center' }}>
+                <h4> Chi tiết sản phẩm <span style={{ color: 'red' }}>{post.post_id}</span></h4>
+              </div>
               <Row>
-                <Col>
+                <Col >
                   <Image
                     loader={() => { return post.image || "https://via.placeholder.com/100x100" }}
                     src="https://via.placeholder.com/100x100"
@@ -128,8 +153,12 @@ export default function DetailPost({ userData }) {
 
                         <div style={{ textAlign: 'center', marginTop: '15px' }}>
                           <h6 style={{ fontWeight: '700', fontSize: '17px', color: 'Black' }}>Liên hệ với người bán</h6>
-                          <button className='button-contact'><FontAwesomeIcon icon={faPhoneVolume} style={{ width: '15px', height: '15px', marginTop: '5px', marginRight: '10px' }} /> Gọi  {user.phonenumber}</button> <hr />
-                          <button className='button-chat'><FontAwesomeIcon icon={faComments} style={{ width: '15px', height: '15px', marginTop: '5px', marginRight: '10px' }} />Chat với người bán</button>
+                          <button className='button-contact'><FontAwesomeIcon icon={faPhoneVolume} style={{ width: '15px', height: '15px', marginTop: '5px', marginRight: '10px' }} />
+                            <Link href={`tel:${user.phonenumber}`} > Gọi  {user.phonenumber}</Link>
+                          </button> <br></br>
+                          <button className='button-chat'><FontAwesomeIcon icon={faComments} style={{ width: '15px', height: '15px', marginTop: '5px', marginRight: '10px' }} />Chat với người bán</button><hr />
+                          <button className='button-contact' onClick={(e) => { sendMail(user.id) }} style={{ backgroundColor: '#943aff', width: '400px' }}> Cho người bán thông tin liên lạc</button>
+
                         </div>
 
 
@@ -153,41 +182,59 @@ export default function DetailPost({ userData }) {
           )
 
         }) : null}
+        <Row>
+          <Row style={{ padding: '20px', backgroundColor: 'white', borderRadius: '5px', marginTop: '10px' }}>
 
-        <Row style={{ padding: '20px', backgroundColor: 'white', borderRadius: '5px', marginTop: '10px' }}>
-          <h6 style={{ color: 'black', fontWeight: '600' }}>Tin rao khác của {post[0] ? post[0].fullname : NULL}</h6>
-          <Card
-            style={{
-              width: '18rem'
-            }}
-          >
-            <img
-              alt="Sample"
-              src="https://picsum.photos/300/200"
-            />
-            <CardBody>
-              <CardTitle tag="h5">
-                Card title
-              </CardTitle>
-              <CardSubtitle
-                className="mb-2 text-muted"
-                tag="h6"
-              >
-                Card subtitle
-              </CardSubtitle>
-              <CardText>
-                Some quick example text to build on the card title and make up the bulk of the card‘s content.
-              </CardText>
-              <Button>
-                Button
-              </Button>
-            </CardBody>
-          </Card>
-         
+            <h6 style={{ color: 'black', fontWeight: '600' }}>Tin rao khác của  {post ? post.map((post, index) => {
+              return (
+                <>
+                  {post.fullname}
+                </>
+              )
 
-      </Row>
+            }) : null}  </h6>
 
-    </Layout >
+            <div className="section-post">
+
+              <div className="scroll-post">
+                {PostUser ? PostUser.map((post, index) => {
+                  return (
+                    <>  {post && post.is_deleted ===  0 ?   <div className="card-post-detail" key={index}>
+                    <div className="card-body-post">
+                      <Image
+                        loader={() => { return post.image || "https://via.placeholder.com/100x100" }}
+                        src="https://via.placeholder.com/100x100"
+                        alt="Picture of the author"
+                        width={266}
+                        height={200}
+                      />
+                      <h5 className="card-title">{post.name}</h5>
+                      <h6 className="card-subtitle mb-2 text-muted">{post.expect_price} đ</h6>
+                      <p className="card-text">{post.updateAt}</p>
+                      <Link href={`/dashboard/detailPost/${post.post_id}`} style={{ textDecoration: 'underline', marginTop: '7px', fontSize: '15px', color: '#77cdff' }}>Xem chi tiết</Link>
+                    </div>
+                  </div> : null }
+                    
+                    </>
+                  )
+
+                }) : 'Không có bài đăng'}
+
+
+
+              </div>
+
+
+
+
+
+            </div>
+
+          </Row>
+
+        </Row>
+
+      </Layout >
     </>
   )
 }

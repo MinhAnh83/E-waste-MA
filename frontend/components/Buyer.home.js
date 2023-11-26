@@ -10,6 +10,7 @@ import Layout from '@/components/Layout';
 import { faCoffee, faSun, faMoon } from '@fortawesome/free-solid-svg-icons'
 import { NextResponse } from 'next/server'
 import { pages } from '@/utils/contanst'
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Row, Col, Table } from 'reactstrap';
 
 
 export default function Buyer() {
@@ -66,11 +67,57 @@ export default function Buyer() {
     };
     return (
         <>
-            <div className="heading" style={{ marginTop: '20px', textAlign: 'center' }}>
-                <h2>Địa chỉ các vựa thu gom</h2>
-                <Map markerList={Scrapyards} center={(() => {
-                    return Scrapyards && Scrapyards[0] && Scrapyards[0].position
-                })()} />
+                 <div className="heading" style={{ marginTop: '20px' }}>
+                <h2 style={{  textAlign:'center' }}>Bản đồ vị tri các vựa ve chai</h2>
+                <Row>
+                    <Col xs="9">
+                    <Map markerList={Scrapyards} center={(() => {
+            return Scrapyards && Scrapyards[0] && Scrapyards[0].position
+          })()} />
+                    </Col>
+               <Col xs="3" style={{ overflow: "auto", height:"289px", backgroundColor:"#e1f7ffbd",borderRadius:'10px',padding:'10px'}}>
+
+              
+            
+               <h5 style={{color:"black", fontWeight:"600", textAlign:"center", fontSize:"18px", letterSpacing:"2px"}}>Danh sách các vựa</h5>
+              {Scrapyards && Scrapyards.map((scrapyards, index) => {
+                return (
+                  <div  key={index} >
+                     <Row>
+                    
+                        <Col sx="2" sm="2" md="2">
+                           
+                        <Image
+                                    src="/assets/img/icon-location.png"
+                                    width={40}
+                                    height={40}
+                                    alt="Picture of the author"
+                                />
+                        </Col>
+                         <Col sx="11">
+                         <p style={{fontSize:'15px', color:"black",fontWeight:"600"}}>{scrapyards.name}</p>  
+                       
+                       
+                         <p style={{fontSize:'10px',marginTop:'-9px',color:'#656472'}}>{scrapyards.address}</p>  
+                         
+                         
+                       
+                           </Col>
+                       
+                       
+                     </Row>
+                    
+                   
+                  </div>
+                )
+              })}
+
+
+          
+       
+               </Col>
+                </Row>
+               
             </div>
 
             <div className="section flex flex-sb" >

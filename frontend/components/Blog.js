@@ -1,11 +1,12 @@
 import React from 'react';
 // import { format } from 'date-fns'
-
+import Link from 'next/link';
 import format from 'date-fns/fp/format'
-import { Button, Form, FormGroup, Label, Input, Spinner, PaginationItem, PaginationLink, Pagination, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import { Button, Row, Col, Form, FormGroup, Label, Input, 
+     Modal, ModalHeader, ModalBody, ModalFooter, Card, CardBody, CardTitle, CardText, CardSubtitle } from 'reactstrap';
 import { useState, useEffect } from 'react';
 import Image from 'next/image'
-import Axios from '@/helper/axios.helper'
+
 
 import axios from 'axios'
 
@@ -78,37 +79,55 @@ export default function Blog({ userData }) {
             <div className="header-post">
                 <h2>Các bài đăng</h2>
             </div>
+           
 
             <div className="row-post">
                 <div className="leftcolumn-post">
-                    {posts ? posts.map((post, index) => {
-                        console.log('hhehe', post)
-                        return (
-                            <>
-                                <div className="card-post" key={index} >
-                                    <h2>{post.name}</h2>
-                                    {/* <h5>{format(post.createAt, 'MM/dd/yyyy') }<span> By  {post.fullname}</span></h5> */}
-                                    <h5>{post.createAt}<span> By  {post.fullname}</span></h5>
-
-                                    <Image
-                                        loader={() => { return post.image || "https://via.placeholder.com/100x100" }}
-                                        src="https://via.placeholder.com/100x100"
-                                        width={400}
-                                        height={200}
-                                        alt="Picture of the author"
-                                        style={{ textAlign: 'center' }}
-                                    />
-
-
-                                    <p>{post.content}</p>
-                                    <Button onClick={(e) => { toggle(post) }} color="primary" style={{ fontSize: '15px' }}>Trả giá</Button>
-
-
-                                </div>
+                <Row >
+                    {posts ? posts.map((post,index)=>{
+                        return(
+                            <> {post && post.is_deleted ===  0 ?     <Col sm="5" style={{marginTop: '10px'}}>
+                            <Card
+                  style={{
+                    width: '18rem', height:'27rem'
+                  }}
+                >
+                <Image
+                                    loader={() => { return post.image || "https://via.placeholder.com/100x100" }}
+                                    src="https://via.placeholder.com/100x100"
+                                    alt="Picture of the author"
+                                    width={286}
+                                    height={200}
+                                  />
+                  <CardBody>
+                    <CardTitle tag="h5" style={{marginTop:'-5px'}}>
+                    {post.name}
+                    </CardTitle>
+                    <CardSubtitle
+                      className="mb-2 text-muted"
+                      tag="h6"
+                    >
+                   
+                      {post.createAt}
+                    </CardSubtitle>
+                    <CardText>
+                 {post.fullname} <br></br>
+                 <Link  href={`/dashboard/detailPost/${post.post_id}`} style={{ textDecoration: 'underline', marginTop: '7px', fontSize: '15px', color: '#77cdff' }}>Xem chi tiết</Link> <br></br>
+                 <Button onClick={(e) => { toggle(post) }} color="primary" style={{ fontSize: '15px' }}>Trả giá</Button>
+                    </CardText>
+                    
+                    
+                  </CardBody>
+                </Card>
+                                </Col>: null} 
+                            
                             </>
                         )
+                    }):'Không có bài viết'}
+           
 
-                    }) : 'Loading....'}
+                </Row>
+          
 
 
 
@@ -134,6 +153,7 @@ export default function Blog({ userData }) {
                                     }
                                     }
                                 />
+                                <br></br>
                                 <Label for="exampleText">
                                     Lí do (Nếu có thể)
                                 </Label>
@@ -203,7 +223,7 @@ export default function Blog({ userData }) {
             </div>
 
 
-            <div className="footer-blog">
+            <div className="footer-blog" style={{marginTop:'20px'}}>
                 <p style={{ marginTop: '10px', marginBottom: '-20px' }}>Author: {fullname}</p><br></br>
                 <a style={{ marginBottom: '10px' }} href="mailto:hege@example.com">{email}</a>
             </div>

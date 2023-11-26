@@ -1,6 +1,7 @@
 import axios from "axios";
 import Image from "next/image";
 import { useEffect, useState } from 'react'
+import Link from "next/link";
 export default function PostDashboard({ posts }) {
     const [data, setData] = useState(posts)
     useEffect(() => {
@@ -40,9 +41,9 @@ export default function PostDashboard({ posts }) {
                         return (
                           <>
                           {post && post.is_deleted===0 ? 
-                             <div className="nft" key={index}>
-                             {post && post.is_deleted === 0 ? 
-                                <div >
+                            <div className="nft" key={index} style={{width:'350px'}}>
+
+                            <div>
                                 <Image
                                     loader={() => { return post.image || "https://via.placeholder.com/100x100" }}
                                     src="https://via.placeholder.com/100x100"
@@ -52,22 +53,25 @@ export default function PostDashboard({ posts }) {
                                 />
 
                                 <div className="title">{post.name}</div>
-                                <div className="details flex flex-sb">
+                                <Link  href={`/dashboard/detailPost/${post.post_id}`} style={{ textDecoration: 'underline', marginTop: '7px', fontSize: '15px', color: '#77cdff' }}>Xem chi tiết</Link>
+                                <div className="details flex flex-sb" style={{ marginTop: '7px' }}>
                                     <div className="author flex">
                                         <img
                                             src="https://raw.githubusercontent.com/programmercloud/nft-dashboard/main/img/user.png"
                                             alt=""
                                         />
-                                        <p>{post.fullname}</p>
-                                    </div>
-                                    <div className="price" style={{ fontSize: '10px' }}>{formatMoney(post.expect_price, 0) || 'Thương lượng'}</div>
-                                </div>
-                            </div> 
-                             
-                             :null}
 
-                        
-                       </div>: null
+                                        <p>{post.fullname}</p>
+
+                                    </div>
+                                    <div className="price" style={{ fontSize: '10px' }}>{formatMoney(post.expect_price, 0) || 'Thương lượng'}</div> <hr />
+
+
+                                </div>
+
+                            </div>
+
+                        </div>: null
                         }
                         
                           </>
