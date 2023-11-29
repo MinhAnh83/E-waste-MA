@@ -207,7 +207,7 @@ function App({ userData, filterUser }) {
 												</div>
 
 												<div className="row">
-													<div className="col-11" style={{ position: 'absolute', bottom: 0, width: '70%' }}>
+													<div className="col-11" style={{ position: 'absolute', bottom: '-49px', width: '70%' }}>
 														<div className="chat-box-tray">
 															<FontAwesomeIcon icon={faFaceSmile} style={{ width: '20px', height: '20px', marginTop: '5px', marginRight: '10px' }} />
 															<input type="text"

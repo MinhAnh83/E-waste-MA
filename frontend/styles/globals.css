@@ -1445,7 +1445,7 @@ p.card-text {
 }
 .chat-box .chat-content {
   overflow-y: auto;
-  height: 380px;
+  height: 400px;
  
 }
 .chat-bubble.chat-bubble--right.chat-bubble {

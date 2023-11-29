@@ -3,7 +3,7 @@ import socketIOClient from "socket.io-client";
 import Head from 'next/head';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPhoneVolume, faHeadset, faComments, faTriangleExclamation, faClock, faLocationDot, faCheck } from '@fortawesome/free-solid-svg-icons'
-
+import dynamic from 'next/dynamic'
 import Script from 'next/script';
 import Layout from '@/components/Layout';
 import Image from "next/image";
@@ -29,27 +29,47 @@ export async function getServerSideProps({ req, res }) {
         },
     };
 }
-export default function FindBuyer({ userData }) {
+export default function FindScrapyard({ userData }) {
     const [layoutPages, setLayoutPages] = useState(null)
-    const [Buyers, setBuyers] = useState([])
+    const [Scrapyarder, setScrapyarder] = useState([])
     const { fullname, name, email, accessApp, id, image } = userData;
     const [User, setUser] = useState(null)
     const [searchItem, setSearchItem] = useState('')
     const [modal1, setModal1] = useState(false);
+    const [Scrapyards, setScrapyards] = useState([])
     const [filteredUsers, setFilteredUsers] = useState([])
+    const Map = dynamic(() => import("@/components/Map"), {
+        ssr: false,
+        loading: () => <p>Loading...</p>,
+    });
+    const onRefresh = () => {
+        axios.get(`/api/myscrapyard`).then((response) => {
+          const { data } = response.data;
+          console.log('danh sachy', data)
+          data.forEach((d) => {
+            d["position"] = d.langlat.split(', ')
+            d["popupContent"] = `
+             ${d.name}\
+            ${d.address}
+            `
+            // them 2 cai key la position va popupContent vao Myscarpyard
+          })
+          setScrapyards(data)
+        })
+      }
     const findBuyer = () => {
         axios.get('/api/user').then((response) => {
             const { data } = response.data;
             console.log(data)
-            let buyers = [];
+            let Scrapyarder = [];
             data.forEach((buyer, index) => {
-                if (buyer.role_id == 2) {
-                    buyers.push(buyer)
+                if (buyer.role_id == 3) {
+                    Scrapyarder.push(buyer)
                 }
             })
-            setBuyers(buyers)
+            setScrapyarder(Scrapyarder)
 
-            console.log('buyers', buyers)
+            console.log('Scrapyarder', Scrapyarder)
         })
     }
     const handleBuyer = (buyer) => {
@@ -73,6 +93,7 @@ export default function FindBuyer({ userData }) {
 
         }
         findBuyer()
+        onRefresh()
 
     }, [])
     const handleInputChange = (e) => {
@@ -84,7 +105,7 @@ export default function FindBuyer({ userData }) {
 
         // filter the items using the apiUsers state
 
-        const filteredItems = Buyers.filter((user) =>
+        const filteredItems = Scrapyarder.filter((user) =>
             user.address.toLowerCase().includes(searchTerm.toLowerCase())
         );
 
@@ -122,8 +143,12 @@ export default function FindBuyer({ userData }) {
             <Layout pages={layoutPages} user={{ fullname, email, name, image }} >
 
                 <div style={{ marginTop: '30px' }}>
-                    <h4 style={{textAlign:'center'}}>Danh sách người thu mua</h4>
-                    <input class="input-inset" type="text" value={searchItem} onChange={handleInputChange} placeholder="Tìm kiếm người thu mua gần nhất"></input>
+                    <h4>Danh sách vị trí của các vựa</h4>
+                <Map markerList={Scrapyards} center={(() => {
+            return Scrapyards && Scrapyards[0] && Scrapyards[0].position
+          })()}/>
+                    <h4 style={{textAlign:'center'}}>Danh sách người các chủ vựa </h4>
+                    <input class="input-inset" type="text" value={searchItem} onChange={handleInputChange} placeholder="Tìm kiếm vựa gần nhất"></input>
                     <ul>
                         <Table hover style={{ marginTop: '20px' }}>
                             <thead>
@@ -165,7 +190,7 @@ export default function FindBuyer({ userData }) {
                             </tbody>
                         </Table>
                     </ul>
-                    <button onClick={(e) => { Showlist() }} style={mybutton} >Xem tất cả các người thu mua</button>
+                    <button onClick={(e) => { Showlist() }} style={mybutton} >Xem tất cả các chủ vựa</button>
                     <Table hover className="table-all" style={{ marginTop: '20px', visibility: 'hidden' }}>
                         <thead>
                             <tr>
@@ -186,7 +211,7 @@ export default function FindBuyer({ userData }) {
                         <tbody>
 
 
-                            {Buyers ? Buyers.map((buyer, index) => {
+                            {Scrapyarder ? Scrapyarder.map((buyer, index) => {
                                 return (
                                     <>
                                         <tr key={index} onClick={(e) => { handleBuyer(buyer) }}>
