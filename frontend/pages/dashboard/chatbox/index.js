@@ -66,6 +66,7 @@ function App({ userData }) {
 	const [chanel, setChanel] = useState(null);
 	const [filterUser, setfilterUser] = useState([]);
 	const searchParams = useSearchParams()
+	const messagesBox = useRef()
 
 
 
@@ -87,14 +88,12 @@ function App({ userData }) {
 		setTimeout(() => {
 			socketIO.current = window.io("ws://localhost:8000");
 			socketIO.current.on("receiveMessage", (messageObj) => {
-				console.log(`Ms:::`, messageObj);
 				const { from, to, text } = messageObj    
-				console.log('TO', to)
-				console.log('ID', userData.id)
-				if(to === userData.id) {
+				if(to == userData.id) {
 				  if(!chatLeftRender.current.includes(messageObj.timestamp)) {
 					addMessage(text, 'left')
 					chatLeftRender.current.push(messageObj.timestamp)
+					scrollToCurrenttMsg()
 				  }
 				}
 			  });
@@ -110,49 +109,65 @@ function App({ userData }) {
 		};
 	}, [])
 	const handleSendmessage = () => {
-		console.log(socketIO.current)
 
 		const messageObj = {
 			messageId: chanel.message_id,
 			userId: userData.id,
 			from: userData.id,
-			to: (chanel.buyer_id == userData.id) ? chanel.saler_id : userData.id,
+			to: !!(chanel.buyer_id === userData.id) ? chanel.saler_id : chanel.buyer_id,
 			text: chatText,
 			timestamp: new Date().getTime()
 		}
+
 		socketIO.current.emit('sendMessage', messageObj);
 		addMessage(chatText, 'right');
 		setChatText('')
+		scrollToCurrenttMsg()
 	}
 
-	// const scrollToBottom = () => {
-	// 	messagesEnd.current.scrollIntoView({ behavior: "smooth" });
-	// }
+	const scrollToCurrenttMsg = () => {
+		messagesBox.current.scrollTo({
+			top: messagesBox.current.scrollHeight,
+			behavior: "smooth"
+		})
+	}
+
 	const onEnterPress = (e) => {
 		if (e.keyCode == 13 && e.shiftKey == false) {
 			handleSendmessage()
 		}
 	}
-	const chatWith = (user) => {
-		user.contentObj = JSON.parse(user.content)
-		setChanel(user)
+	const chatWith = (messageRoom) => {
+
+		getMessageById({ messageId: messageRoom.message_id }).then((result) => {
+			result.contentObj = JSON.parse(result.content)
+			setChanel(result)
+			setTimeout(() => {
+				scrollToCurrenttMsg()
+			})
+		})
 	}
 
 
 	const addMessage = (message, key) => {
-		console.log(message)
-		let child = document.createElement('div');
-		if (key === "left") {
-			child.innerHTML = '<div class="row no-gutters"><div class="col-md-4"><div class="chat-bubble chat-bubble--left">' +
-				message +
-				'</div></div></div>';
+		const chatboxEle = document.getElementById('chatbox')
+		if(chatboxEle) {
+			let child = document.createElement('div');
+			if (key === "left") {
+				child.innerHTML = '<div class="row no-gutters"><div class="col-md-4"><div class="chat-bubble chat-bubble--left">' +
+					message +
+					'</div></div></div>';
+			} else {
+				child.innerHTML = '<div class="row no-gutters"><div class="col-md-4 offset-md-8"><div class="chat-bubble chat-bubble--right">' +
+					message +
+					'</div></div></div>'
+			}
+			child = child.firstChild;
+			chatboxEle.appendChild(child)
 		} else {
-			child.innerHTML = '<div class="row no-gutters"><div class="col-md-4 offset-md-8"><div class="chat-bubble chat-bubble--right">' +
-				message +
-				'</div></div></div>'
+			// add noti in menu
 		}
-		child = child.firstChild;
-		document.getElementById('chatbox').appendChild(child)
+
 	}
 
 
@@ -195,6 +210,20 @@ function App({ userData }) {
 	// 	  }
 	// 	});
 	//   }
+
+	const getMessageById = ({ messageId }) => {
+		return axios.get(`/api/message/getbyid?messageId=${messageId}`).then((res) => {
+			if (res && res.data) {
+				const { data } = res;
+				if(data && data[0]) {
+				return data[0]
+				} else {
+					return {}
+				}
+
+			}
+		});
+	}
 
 	const getMessageByUser = async ({ userId, role }) => {
 		return axios.get(`/api/message/getbyuser?userId=${userId}&role=${role}`).then((res) => {
@@ -241,7 +270,8 @@ function App({ userData }) {
 									filterUser.map((fuser, index) => {
 										return (
 											<div key={index} onClick={() => chatWith(fuser)}>
-												<div className="friend-drawer friend-drawer--onhover">
+												<div className="friend-drawer friend-drawer--onhover"
+												style={{backgroundColor: (chanel && chanel.id == fuser.id) ? "#74b9ff" : null}}>
 													<img
 														className="profile-image"
 														src={
@@ -263,8 +293,9 @@ function App({ userData }) {
 										);
 									})}
 							</div>
-							<div className="col-md-8" style={{ height: 500, overflowY: "auto" }}>
-								{chanel ? (
+							<div className="col-md-8" style={{ height: 500, overflowY: "auto" }}
+							ref={messagesBox}>
+								{ (chanel) ? (
 									<>
 										<div className="settings-tray">
 											<div className="friend-drawer no-gutters friend-drawer--grey">

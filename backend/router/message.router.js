@@ -6,6 +6,7 @@ const MessageController = require("../controller/message.controller")
 router.post("/create", MessageController.createMessage)
 router.get("/getbypost", MessageController.getMessageByPost)
 router.get("/getbyuser", MessageController.getAllMessageByUser)
+router.get("/getbyid", MessageController.getMessageById)
 // router.post("/edit", RoleController.editRole)
 
 

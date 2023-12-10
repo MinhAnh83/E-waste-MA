@@ -30,6 +30,18 @@ class MessageService {
             }
         })
     }
+    static getMessageById = async ({ messageId }) => {
+        let url = '/api/message/getbyid?'
+        if (messageId) url = url + `messageId=${messageId}`
+        return await Axios.get(url).then((response)=>{
+            const {data}  =response;
+            return data
+        }).catch((err)=>{
+            return {
+                err: err.message
+            }
+        })
+    }
     static getMessageByUser = async ({ userId, role }) => {
         let url = '/api/message/getbyuser?'
         if (userId) url = url + `userId=${userId}&`
