@@ -165,7 +165,7 @@ export default function DetailPost({ userData }) {
                           <button className='button-contact'><FontAwesomeIcon icon={faPhoneVolume} style={{ width: '15px', height: '15px', marginTop: '5px', marginRight: '10px' }} />
                             <Link href={`tel:${user.phonenumber}`} > Gọi  {user.phonenumber}</Link>
                           </button> <br></br>
-                          <button className='button-chat'><FontAwesomeIcon icon={faComments} style={{ width: '15px', height: '15px', marginTop: '5px', marginRight: '10px' }} />Chat với người bán</button><hr />
+                          <Link  href={`/dashboard/chatbox?salerId=${user.id}&postId=${post.post_id}`} className='button-chat'><FontAwesomeIcon icon={faComments} style={{ width: '15px', height: '15px', marginTop: '5px', marginRight: '10px' }} />Chat với người bán</Link><hr />
                           <button className='button-contact' onClick={(e) => { sendMail(user.id) }} style={{ backgroundColor: '#943aff', width: '400px' }}> Cho người bán thông tin liên lạc</button>
                           
 

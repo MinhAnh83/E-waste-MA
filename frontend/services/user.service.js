@@ -20,6 +20,12 @@ class UserService {
 
         return await Axios.post('/api/user/edit',{ email, fullname, phonenumber, address, image, id})
     }
+    static verifyEmail = async ({email})=>{
+        return await Axios.post('/api/user/verify',{email})
+    }
+    static setPassword= async ({password,id})=>{
+        return await Axios.post('/api/user/setpassword',{password,id})
+    }
 }
 
 module.exports = UserService
