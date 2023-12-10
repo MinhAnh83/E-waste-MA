@@ -33,13 +33,13 @@ import {
   NavItem,
   NavLink,
   Nav,
-  Spinner
+  Spinner, Toast, ToastHeader, ToastBody
 } from "reactstrap";
 const inter = Inter({ subsets: ['latin'] })
 //dung getStaticProps goi duoc cong 8000
 export async function getStaticProps() {
-//   const res = await Axios.get('/api/product')
-// console.log(res)
+  //   const res = await Axios.get('/api/product')
+  // console.log(res)
   return {
     props: {
       data: {}
@@ -53,6 +53,8 @@ export default function Home({ data }) {
     password: ''
   })
   const [spinner, setSpinner] = useState(false)
+  const [Error, setError] = useState('')
+  const [showA, setShowA] = useState(false);
   const handle = () => {
     window.alert('test nè')
   }
@@ -69,24 +71,27 @@ export default function Home({ data }) {
       const results = response.data.data.result
       const email = results.email
       console.log(data)
-       const { token } = data
-       Axios.defaults.headers.common['authorization'] = token;
+      const { token } = data
+      Axios.defaults.headers.common['authorization'] = token;
       localStorage.setItem('user', email)
-      setCookie('vechaitoken',token,2)
+      setCookie('vechaitoken', token, 2)
       setSpinner(true)
-       window.location.replace('/dashboard')
+      window.location.replace('/dashboard')
       // router.push('/dashboard')
       // navigate('/')
     }).catch((err) => {
-      console.log(err)
+      console.log('eee', err)
+      setError('Tên người dùng hoặc mật khẩu không hợp lệ')
+      setShowA(!showA);
     })
   }
-  const setCookie=(cname, cvalue, exdays)=>{
+  const setCookie = (cname, cvalue, exdays) => {
     const d = new Date();
-  d.setTime(d.getTime() + (exdays*24*60*60*1000));
-  let expires = "expires="+ d.toUTCString();
-  document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+    d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+    let expires = "expires=" + d.toUTCString();
+    document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
   }
+  const toggleShowA = () => setShowA(!showA);
   // console.log('FrontEnd nè', data)
   return (
     <>
@@ -98,11 +103,11 @@ export default function Home({ data }) {
       </Head>
 
       <main className={`${styles.main} ${inter.className}`}>
-       <Navbarhome/>
+        <Navbarhome />
         <h1>Đăng nhập</h1>
         <Container fluid>
           <Row>
-            <Col style={{ marginTop: '76px', marginLeft: '20px', textAlign:'center' }}>
+            <Col style={{ marginTop: '76px', marginLeft: '20px', textAlign: 'center' }}>
               <Image
                 src="/assets/img/login3.png"
                 width={500}
@@ -112,10 +117,22 @@ export default function Home({ data }) {
               />
 
             </Col>
+            {Error ?
+              <div>
+                <Toast isOpen={showA}  >
+                  <ToastHeader icon="primary" toggle={toggleShowA}>
+                    Information !!
+                  </ToastHeader>
+                  <ToastBody>
+                    {Error}
+                  </ToastBody>
+                </Toast>
+              </div>
+              : null}
             <Col style={{ marginTop: '78px' }}>
-              <Card className={styles.loginBlock} style={{ width: '400px', height: '472px' , padding:'30px'}}>
-                <CardTitle tag="h4" style={{textAlign:'center'}}>
-                <span className={styles.cardTitle}>Đăng nhập</span>  </CardTitle>
+              <Card className={styles.loginBlock} style={{ width: '400px', height: '472px', padding: '30px' }}>
+                <CardTitle tag="h4" style={{ textAlign: 'center' }}>
+                  <span className={styles.cardTitle}>Đăng nhập</span>  </CardTitle>
                 <div className={styles.inputLogin}>
                   <label className={styles.labelLogin}>Email </label>
 
@@ -147,8 +164,8 @@ export default function Home({ data }) {
                 <Button className={styles.btnLogin}
                   size="lg"
                   onClick={onHandleLogin}>
-                {(spinner)?<Spinner></Spinner> : 'Bắt đầu' }  
-                  
+                  {(spinner) ? <Spinner></Spinner> : 'Bắt đầu'}
+
                 </Button>
               </Card>
 

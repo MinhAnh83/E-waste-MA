@@ -8,6 +8,7 @@ const port = 8000;
 const bodyParser = require('body-parser')
 const session = require('express-session');
 const morgan = require('morgan');
+const MessageModel = require('./model/message.repo')
 
 
 const {Server} = require('socket.io');
@@ -51,8 +52,17 @@ io.on('connection', (socket) => {
   socket.on("sendMessage", (message) =>{ // Handle khi có sự kiện tên là sendDataClient từ phía client
     console.log(message)
     socket.broadcast.emit("receiveMessage", message);// phát sự kiện  có tên sendDataServer cùng với dữ liệu tin nhắn từ phía server
+  //luu du lieu
+  const { messageId, text, userId, from, to, timestamp} = message
+    MessageModel.updateMessage({
+      messageId: messageId,
+      messageObj: {
+        userId, text, timestamp, from, to
+      }
+    })
+  
   })
- 
+  
   
   socket.on('disconnect', () => {
     console.log('user disconnected');

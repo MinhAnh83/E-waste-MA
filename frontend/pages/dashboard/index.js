@@ -71,7 +71,7 @@ export default function Dashboard({ userData }) {
         <main>
             <Layout pages={layoutPages} user={{ fullname, email, name }}>
 
-            {(name === 'seller') ?<Saler userData={userData}></Saler> : null }
+            {(name === 'saler') ?<Saler userData={userData}></Saler> : null }
 
             {(name === 'buyer') ?<BuyerHome ></BuyerHome> : null }
       

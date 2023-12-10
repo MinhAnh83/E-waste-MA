@@ -188,5 +188,9 @@ class UserController {
         const result = await UserModel.getUserWithRole(parseInt(userId))
         res.json(result)
     }
+    static getAllUserWithRole = async (req, res, next) => {
+        const result = await UserModel.getAllUserWithRole()
+        res.json(result)
+    }
 }
 module.exports = UserController

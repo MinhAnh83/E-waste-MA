@@ -1,0 +1,33 @@
+### Post Role
+POST  http://localhost:8000/api/message/create
+content-type: application/json
+
+{
+    "buyerId":1 , 
+"salerId": 2, 
+"postId": 10, 
+"content": {"from":1, "to":2, "message":"anh test"}
+    
+}
+### Post Role
+POST  http://localhost:3000/api/message
+content-type: application/json
+
+{
+    "buyerId":1 , 
+"salerId": 2, 
+"postId": 10, 
+"content": {"from":1, "to":2, "message":"anh test1"}
+    
+}
+
+
+### GET message
+
+GET http://localhost:8000/api/message/getbypost?buyerId=1&salerId=2&postId=10
+content-type: application/json
+
+### GET message
+
+GET http://localhost:8000/api/message/getbyuser?userId=2&role=saler
+content-type: application/json

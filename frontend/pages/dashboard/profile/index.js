@@ -46,6 +46,7 @@ export default function Myprofile({ userData }) {
 
   })
   const [File, setFile] = useState(profile.image)
+  
   console.log(File)
   const [errMsg, setErrMsg] = useState(null)
   console.log(userData)
@@ -72,7 +73,19 @@ export default function Myprofile({ userData }) {
 
   }
   const handleProfile = () => {
-    if (!File) return setErrMsg('Vu long them anh !!')
+    if(File === image) {
+      console.log(11)
+      profile.image = image
+      console.log('imageee',image)
+      axios.post('/api/user', { ...profile }).then(() => {
+        // handleCreatedCB && handleCreatedCB()
+        window.location.replace('/dashboard/profile')
+        //goi nguoc lai ham me
+  
+      })
+    }
+   else{
+    console.log('12')
     uploadFileToStorage(File).then((imgURL) => {
       profile.image = imgURL
       console.log('my profile', profile)
@@ -82,15 +95,15 @@ export default function Myprofile({ userData }) {
         //goi nguoc lai ham me
 
       })
-
-
     }).catch(() => {
       setErrMsg('Tai anh len that bai')
     })
+   }
+ 
 
   }
 
-
+  
 
   return <>
     <Head>

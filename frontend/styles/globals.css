@@ -1479,3 +1479,27 @@ padding: .5em 1em .5em 2.5em;
   outline: none;
   border: 1px solid #84A2FA;
 }
+.content-mypost{
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 250px;
+  word-wrap: break-word;
+}
+.content-mypost:hover{
+  white-space: normal;
+  overflow: visible;
+  width: 100%;
+  word-wrap: break-word;
+}
+.button-price{
+  border: none;
+  padding: 7px;
+  border-radius: 10px;
+  background-color: #9f602f;
+  color: white;
+  font-weight: 700;
+}
+.button-price:hover{
+  background-color: #a7866d;
+}

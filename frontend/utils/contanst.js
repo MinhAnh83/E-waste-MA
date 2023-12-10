@@ -25,7 +25,7 @@ export const pages = [
     },
     {
         key: "findscrapyard",
-        name: "Tìm vựa ve chai",
+        name: "Tìm các vựa thu mua",
         icon: <FontAwesomeIcon icon={faStore} style={{ width: '20px', height: '20px',   marginBottom: '12px' }} />,
         href: '/dashboard/saleplaces'
         

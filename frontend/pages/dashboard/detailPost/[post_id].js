@@ -17,8 +17,9 @@ import Updatescrapyard from '@/components/Updatescrapyard';
 import { Button, Row, Col, Input, Card, CardTitle, CardSubtitle, CardText, CardBody } from 'reactstrap';
 
 
-export async function getServerSideProps({ req, res }) {
+export async function getServerSideProps({ req, res, params }) {
   const token = req.cookies["vechaitoken"];
+  // const {post_id} = params lay params 
   const { data } = await Axios({
     url: "/api/user/getbytoken",
     method: "GET",
@@ -29,6 +30,7 @@ export async function getServerSideProps({ req, res }) {
   return {
     props: {
       userData: data[0]
+      // post_id: post_id
     },
   };
 }
@@ -71,7 +73,7 @@ export default function DetailPost({ userData }) {
     sendmail.to = User[0].email
     sendmail.html = `<h3>Tôi muốn mua </h3>
 <p>Hãy liên lạc với tôi dưa trên các thông tin này</p>
-  <a src="http://localhost:3000/dashboard/approve?user_id=${id}">Chap nhan</a>
+  <a src="http://localhost:3000/user/info/${id}">Link thông tin</a>
   `
     sendmail.subject = `Người mua ${id} muốn mua sản phẩm`
     axios.post('/api/mail', { ...sendmail })
@@ -130,7 +132,14 @@ export default function DetailPost({ userData }) {
                     <h4 style={{ color: 'black', fontWeight: '700' }}>{post.name}</h4>
                     <h7 style={{ color: 'red', fontWeight: '600' }}>{post.expect_price} đ</h7>
                     <p><FontAwesomeIcon icon={faLocationDot} style={{ width: '15px', height: '15px', marginTop: '5px', marginRight: '10px' }} />{post.address}</p>
-                    <p><FontAwesomeIcon icon={faClock} style={{ width: '15px', height: '15px', marginTop: '5px', marginRight: '10px' }} />Đăng lúc {post.updateAt}</p>
+                    <p><FontAwesomeIcon icon={faClock} style={{ width: '15px', height: '15px', marginTop: '5px', marginRight: '10px' }} />Đăng lúc  {new Date(post.createAt).toLocaleDateString("en-US", {
+                                                    day: "numeric",
+                                                    month: "short",
+                                                    year: 'numeric',
+                                                    hour:'numeric',
+                                                    minute:'numeric'
+                                        
+                                                })}</p>
                     <p><FontAwesomeIcon icon={faCheck} style={{ width: '15px', height: '15px', marginTop: '5px', marginRight: '10px' }} />Tin đã được kiểm duyệt</p>
                   </div>
                   <div style={{ marginTop: '10px', backgroundColor: 'white', borderRadius: '5px', padding: '15px' }} >
@@ -158,6 +167,7 @@ export default function DetailPost({ userData }) {
                           </button> <br></br>
                           <button className='button-chat'><FontAwesomeIcon icon={faComments} style={{ width: '15px', height: '15px', marginTop: '5px', marginRight: '10px' }} />Chat với người bán</button><hr />
                           <button className='button-contact' onClick={(e) => { sendMail(user.id) }} style={{ backgroundColor: '#943aff', width: '400px' }}> Cho người bán thông tin liên lạc</button>
+                          
 
                         </div>
 
@@ -200,6 +210,7 @@ export default function DetailPost({ userData }) {
                 {PostUser ? PostUser.map((post, index) => {
                   return (
                     <>  {post && post.is_deleted ===  0 ?   <div className="card-post-detail" key={index}>
+                      
                     <div className="card-body-post">
                       <Image
                         loader={() => { return post.image || "https://via.placeholder.com/100x100" }}
@@ -219,21 +230,10 @@ export default function DetailPost({ userData }) {
                   )
 
                 }) : 'Không có bài đăng'}
-
-
-
               </div>
-
-
-
-
-
             </div>
-
           </Row>
-
         </Row>
-
       </Layout >
     </>
   )

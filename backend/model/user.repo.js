@@ -16,6 +16,14 @@ class UserModel {
                 })
         })
     }
+    static getAllUserWithRole =async()=>{
+        return new Promise((resolve, reject) => {
+             con.query("SELECT * FROM users INNER JOIN roles ON users.role_id = roles.role_id", function(error, results, fields){
+                 if(error) reject(error)
+                 resolve(results)
+             })
+         })
+     }
     static getUser = async ({user_id}) => {
         return new Promise((resolve, reject) => {
             let query ='SELECT * FROM users INNER JOIN roles ON users.role_id = roles.role_id'

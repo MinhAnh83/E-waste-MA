@@ -235,7 +235,7 @@ export default function Myscrapyard({ userData }) {
 
     </Modal>
 
-    <Modal isOpen={modal2} toggle={toggle2} >
+    <Modal isOpen={modal2} toggle={toggle2}  style={{ top: '-30px'}}>
       <ModalHeader toggle={toggle2}>Sửa thông tin vựa</ModalHeader>
       <ModalBody>
         <Updatescrapyard scrapyardSelected={scrapyardSelected}></Updatescrapyard>

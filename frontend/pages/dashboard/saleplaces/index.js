@@ -12,6 +12,7 @@ import { pages } from '@/utils/contanst'
 import Link from "next/link";
 import { Table, Row, Col } from 'reactstrap';
 import axios from "axios";
+import Createscrapyard from "@/components/Createscrapyard";
 
 export async function getServerSideProps({ req, res }) {
     const token = req.cookies["vechaitoken"];
@@ -55,27 +56,26 @@ export default function FindScrapyard({ userData }) {
             // them 2 cai key la position va popupContent vao Myscarpyard
           })
           setScrapyards(data)
+          console.log('scrapyardall', data)
         })
       }
-    const findBuyer = () => {
-        axios.get('/api/user').then((response) => {
+    const findscrapyarder = (user_id) => {
+        console.log('user_id',user_id)
+       if(user_id){
+        axios.get(`/api/user?user_id=${user_id}`).then((response) => {
             const { data } = response.data;
-            console.log(data)
-            let Scrapyarder = [];
-            data.forEach((buyer, index) => {
-                if (buyer.role_id == 3) {
-                    Scrapyarder.push(buyer)
-                }
-            })
-            setScrapyarder(Scrapyarder)
+            console.log('du lieu chu vua',data[0])
+            
+            setScrapyarder(data[0])
 
-            console.log('Scrapyarder', Scrapyarder)
+          
         })
+       } 
     }
-    const handleBuyer = (buyer) => {
-        console.log('buyeriii', buyer)
+    const handleScrapyard = (scrapyard) => {
+        console.log('buyeriii', scrapyard)
      
-            setUser(buyer)
+            setUser(scrapyard)
         
       
        
@@ -92,7 +92,7 @@ export default function FindScrapyard({ userData }) {
             setLayoutPages(foundePages)
 
         }
-        findBuyer()
+        findscrapyarder()
         onRefresh()
 
     }, [])
@@ -105,8 +105,8 @@ export default function FindScrapyard({ userData }) {
 
         // filter the items using the apiUsers state
 
-        const filteredItems = Scrapyarder.filter((user) =>
-            user.address.toLowerCase().includes(searchTerm.toLowerCase())
+        const filteredItems = Scrapyards.filter((scrapyard) =>
+            scrapyard.address.toLowerCase().includes(searchTerm.toLowerCase())
         );
 
         setFilteredUsers(filteredItems);
@@ -147,7 +147,7 @@ export default function FindScrapyard({ userData }) {
                 <Map markerList={Scrapyards} center={(() => {
             return Scrapyards && Scrapyards[0] && Scrapyards[0].position
           })()}/>
-                    <h4 style={{textAlign:'center'}}>Danh sách người các chủ vựa </h4>
+                    <h4 style={{textAlign:'center'}}>Danh sách các vựa </h4>
                     <input class="input-inset" type="text" value={searchItem} onChange={handleInputChange} placeholder="Tìm kiếm vựa gần nhất"></input>
                     <ul>
                         <Table hover style={{ marginTop: '20px' }}>
@@ -160,7 +160,7 @@ export default function FindScrapyard({ userData }) {
                                         Name
                                     </th>
                                     <th>
-                                        Email
+                                        open time
                                     </th>
                                     <th>
                                         Address
@@ -168,20 +168,20 @@ export default function FindScrapyard({ userData }) {
                                 </tr>
                             </thead>
                             <tbody>
-                                {filteredUsers ? filteredUsers.map(buyer =>
+                                {filteredUsers ? filteredUsers.map(scrapyard =>
 
-                                    <tr key={buyer.id} onClick={(e) => { handleBuyer(buyer) }}>
+                                    <tr key={scrapyard.id} onClick={(e) => { handleScrapyard(scrapyard) }}>
                                         <th scope="row"   >
-                                            {buyer.id}
+                                            {scrapyard.id}
                                         </th>
-                                        <td>
-                                            {buyer.fullname}
+                                        <td style={{fontSize:'12px'}}>
+                                            {scrapyard.name}
                                         </td>
-                                        <td>
-                                            {buyer.email}
+                                        <td style={{fontSize:'12px'}}>
+                                            {scrapyard.open_time}
                                         </td>
-                                        <td>
-                                            {buyer.address}
+                                        <td style={{fontSize:'12px'}}>
+                                            {scrapyard.address}
                                         </td>
                                     </tr>
 
@@ -201,7 +201,7 @@ export default function FindScrapyard({ userData }) {
                                     Name
                                 </th>
                                 <th>
-                                    Email
+                                    Open time
                                 </th>
                                 <th>
                                     Address
@@ -211,21 +211,21 @@ export default function FindScrapyard({ userData }) {
                         <tbody>
 
 
-                            {Scrapyarder ? Scrapyarder.map((buyer, index) => {
+                            {Scrapyards ? Scrapyards.map((scrapyard, index) => {
                                 return (
                                     <>
-                                        <tr key={index} onClick={(e) => { handleBuyer(buyer) }}>
+                                        <tr key={index} onClick={(e) => { handleScrapyard(scrapyard) }}>
                                             <th scope="row"   >
-                                                {buyer.id}
+                                                {scrapyard.id}
                                             </th>
-                                            <td>
-                                                {buyer.fullname}
+                                            <td style={{fontSize:'12px'}}>
+                                                {scrapyard.name}
                                             </td>
-                                            <td>
-                                                {buyer.email}
+                                            <td style={{fontSize:'12px'}}>
+                                                {scrapyard.open_time}
                                             </td>
-                                            <td>
-                                                {buyer.address}
+                                            <td style={{fontSize:'12px'}}>
+                                                {scrapyard.address}
                                             </td>
                                         </tr>
 
@@ -238,17 +238,21 @@ export default function FindScrapyard({ userData }) {
                         {User ? <>
                             <div >
                                 <Row>
-                                    <h6 style={{ textAlign: 'center', fontWeight: '600', color: 'black' }}>Thông tin người thu mua</h6>
+                                    <h6 style={{ textAlign: 'center', fontWeight: '600', color: 'black' }}>Thông tin của vựa</h6>
                                     <Col>
 
-                                        <h7>Tên: <span>{User.fullname}</span></h7> <br></br>
+                                        <h7>Tên: <span>{User.name}</span></h7> <br></br>
                                         <h7>Địa chỉ: <span>{User.address}</span></h7> <br></br>
-                                        <h7>Email: <span>{User.email}</span></h7> <br></br>
-                                        <h7>Số điện thoại: <span>{User.phonenumber}</span></h7><br></br>
-                                        <button className='button-contact'><FontAwesomeIcon icon={faPhoneVolume} style={{ width: '15px', height: '15px', marginTop: '5px', marginRight: '10px' }} />
-                                            <Link href={`tel:${User.phonenumber}`} > Gọi  {User.phonenumber}</Link>
-                                        </button> <br></br>
-                                        <button className='button-chat'><FontAwesomeIcon icon={faComments} style={{ width: '15px', height: '15px', marginTop: '5px', marginRight: '10px' }} />Chat với người thu mua</button><hr />
+                                        <h7>Thời gian mở: <span>{User.open_time}</span></h7> <br></br>
+                                    <button style={mybutton} onClick={(e)=>{findscrapyarder(User.user_id)}}>Xem thông tin của chủ vựa</button>   
+  end                                      {Scrapyarder ? 
+                                        <>
+                                        <br></br>
+                                       
+                                        <h7 style={{marginTop:'20px'}}>Tên: {Scrapyarder.fullname}</h7> <br></br>
+                                        <h7>Email: {Scrapyarder.email}</h7> <br></br>
+                                        <h7>Số điện thoại: {Scrapyarder.phonenumber}</h7>
+                                        </> : null}
                                     </Col>
                                     <Col>
                                         <div style={{ textAlign: 'center' }}>
@@ -268,7 +272,7 @@ export default function FindScrapyard({ userData }) {
                             </div>
 
 
-                        </> : 'Chưa có người bán nào được tìm kiếm'}
+                        </> : 'Chưa có vựa nào được tìm kiếm'}
                     </div>
 
 

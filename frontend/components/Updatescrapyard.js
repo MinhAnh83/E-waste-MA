@@ -30,7 +30,7 @@ export default function Updatescrapyard({ scrapyardSelected }) {
          if(!selectedLatLng){
             updateScrapyard.langlat =  langlat;
          }
-         updateScrapyard.langlat = `${selectedLatLng.lat}, ${selectedLatLng.lng}`
+        //  updateScrapyard.langlat = `${selectedLatLng.lat}, ${selectedLatLng.lng}`
             axios.post('/api/myscrapyard/update', { ...updateScrapyard }).then(() => {
                 window.location.replace('/dashboard/myscrapyard')
             })

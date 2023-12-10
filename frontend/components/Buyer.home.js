@@ -131,44 +131,55 @@ export default function Buyer() {
                         <div className="browse">
 
                             {posts.map((post, index) => {
-                                return (
+                                return(
+                                    <>
+            {post.is_deleted == 0 ?
+                                 
+                                 <div className="nft" key={index}>
 
-                                    <div className="nft" key={index}>
+                                 <div>
+                                     <Image
+                                         loader={() => { return post.image || "https://via.placeholder.com/100x100" }}
+                                         src="https://via.placeholder.com/100x100"
+                                         width={268}
+                                         height={254}
+                                         alt="Picture of the author"
+                                     />
 
-                                        <div>
-                                            <Image
-                                                loader={() => { return post.image || "https://via.placeholder.com/100x100" }}
-                                                src="https://via.placeholder.com/100x100"
-                                                width={268}
-                                                height={254}
-                                                alt="Picture of the author"
-                                            />
+                                     <div className="title">{post.name}</div>
+                                     <Link  href={`/dashboard/detailPost/${post.post_id}`} style={{ textDecoration: 'underline', marginTop: '7px', fontSize: '15px', color: '#77cdff' }}>Xem chi tiết</Link>
+                                     <div className="details flex flex-sb" style={{ marginTop: '7px' }}>
+                                         <div className="author flex">
+                                             <img
+                                                 src="https://raw.githubusercontent.com/programmercloud/nft-dashboard/main/img/user.png"
+                                                 alt=""
+                                             />
 
-                                            <div className="title">{post.name}</div>
-                                            <Link  href={`/dashboard/detailPost/${post.post_id}`} style={{ textDecoration: 'underline', marginTop: '7px', fontSize: '15px', color: '#77cdff' }}>Xem chi tiết</Link>
-                                            <div className="details flex flex-sb" style={{ marginTop: '7px' }}>
-                                                <div className="author flex">
-                                                    <img
-                                                        src="https://raw.githubusercontent.com/programmercloud/nft-dashboard/main/img/user.png"
-                                                        alt=""
-                                                    />
+                                             <p>{post.fullname}</p>
 
-                                                    <p>{post.fullname}</p>
-
-                                                </div>
-                                                <div className="price" style={{ fontSize: '10px' }}>{formatMoney(post.expect_price, 0) || 'Thương lượng'}</div> <hr />
-
-
-                                            </div>
-
-                                        </div>
-
-                                    </div>
+                                         </div>
+                                         <div className="price" style={{ fontSize: '10px' }}>{formatMoney(post.expect_price, 0) || 'Thương lượng'}</div> <hr />
 
 
+                                     </div>
 
+                                 </div>
 
+                             </div>
+
+                                 : null}
+                                    </>
                                 )
+                    
+                              //  return (
+//{post.is_deleted==0 ? :null}
+                                    
+                                
+
+
+
+                              //  )
+
                             })}
 
                         </div>
@@ -187,7 +198,7 @@ export default function Buyer() {
                             />
                         </div> */}
 
-                    <div className="top-creators">
+                    {/* <div className="top-creators">
                         <div className="heading flex flex-sb">
                             <h2>Top Salers</h2>
                             <p >See all</p>
@@ -294,7 +305,7 @@ export default function Buyer() {
                                 Follow
                             </a>
                         </div>
-                    </div>
+                    </div> */}
                 </div>
             </div>
         </>
