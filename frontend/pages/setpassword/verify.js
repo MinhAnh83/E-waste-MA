@@ -40,6 +40,7 @@ export default function Approve(){
     const [email,setEmail] =useState(null);
     const [Error,setError]=useState(null);
     const [showA, setShowA] = useState(false);
+    const [showB, setShowB] = useState(false);
     const [Success,setSuccess] =useState(null);
    
     const [sendmail, setsendMail] = useState({
@@ -56,17 +57,22 @@ const getUser=()=>{
         const {data} =res.data;
         const result = data.result;
         console.log('hihi',result);
-        setSuccess("Đã gửi mail tành công. Mời bạn vào gmail để xác nhận. ")
+        
+      
         return result;
     }).then((response) => {
         console.log('lay mail nha', response.email)
+        console.log('lay id nha', response.id)
         sendmail.to = response.email
         sendmail.html = `
-        <a src="http://localhost:3000/setpassword/1">Chap nhan</a>
+        <a src="http://localhost:3000/setpassword/${response.id}">Chap nhan</a>
         `
         sendmail.subject = `Người mua `
         // axios.post('/api/mail', { ...sendmail })
-       
+        console.log(111)
+        setSuccess('Đã gửi mail thành công. Mời bạn vào gmail để xác nhận.')
+        setShowB(!showB);
+        console.log(222)
     }).catch((error)=>{
         console.log('eeee')
         setError('Tên đăng ký không tồn tại')
@@ -74,19 +80,20 @@ const getUser=()=>{
     })
 }  
 const toggleShowA = () => setShowA(!showA);
+const toggleShowB = () => setShowB(!showB);
 
 return(
     <>
    
 
   <div className="mainDiv">
-  
+
   <div className="cardStyle">
   {Error ?
               <div style={{marginLeft:'40px'}}>
                 <Toast isOpen={showA}  >
-                  <ToastHeader icon="primary" toggle={toggleShowA}>
-                    Information !!
+                  <ToastHeader icon="danger" toggle={toggleShowA}>
+                    Danger !!
                   </ToastHeader>
                   <ToastBody>
                     {Error}
@@ -94,21 +101,24 @@ return(
                 </Toast>
               </div>
               : null}
-            {Success ?
-              <div style={{marginLeft:'40px'}}>
-                <Toast isOpen={showA}  >
-                  <ToastHeader icon="primary" toggle={toggleShowA}>
+               {/* {Success ?  <div >
+                <p style={{textAlign:'center',borderLeft:'10px solid green', border:'1px solid black', padding: '5px', borderRadius:'5px', width: '454px'}}>Đã gửi mail thành công. Mời bạn vào gmail để xác nhận.</p>
+              </div> : null } */}
+              {Success ?  <div >
+                <Toast isOpen={showB}  style={{marginLeft:'30px'}} >
+                  <ToastHeader icon="primary" toggle={toggleShowB}>
                     Information !!
                   </ToastHeader>
                   <ToastBody>
                     {Success}
                   </ToastBody>
                 </Toast>
-              </div>
-              : null}    
+              </div> : null }
     <div >
       
-     
+   
+             
+            
       
       <h2 className="formTitle">
     Input your email

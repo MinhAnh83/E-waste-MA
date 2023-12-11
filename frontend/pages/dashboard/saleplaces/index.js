@@ -153,9 +153,7 @@ export default function FindScrapyard({ userData }) {
                         <Table hover style={{ marginTop: '20px' }}>
                             <thead>
                                 <tr>
-                                    <th>
-                                        ID
-                                    </th>
+                                  
                                     <th>
                                         Name
                                     </th>
@@ -171,10 +169,8 @@ export default function FindScrapyard({ userData }) {
                                 {filteredUsers ? filteredUsers.map(scrapyard =>
 
                                     <tr key={scrapyard.id} onClick={(e) => { handleScrapyard(scrapyard) }}>
-                                        <th scope="row"   >
-                                            {scrapyard.id}
-                                        </th>
-                                        <td style={{fontSize:'12px'}}>
+                                       
+                                        <td style={{fontSize:'12px'}} scope="row">
                                             {scrapyard.name}
                                         </td>
                                         <td style={{fontSize:'12px'}}>
@@ -194,9 +190,7 @@ export default function FindScrapyard({ userData }) {
                     <Table hover className="table-all" style={{ marginTop: '20px', visibility: 'hidden' }}>
                         <thead>
                             <tr>
-                                <th>
-                                    ID
-                                </th>
+                                
                                 <th>
                                     Name
                                 </th>
@@ -215,10 +209,8 @@ export default function FindScrapyard({ userData }) {
                                 return (
                                     <>
                                         <tr key={index} onClick={(e) => { handleScrapyard(scrapyard) }}>
-                                            <th scope="row"   >
-                                                {scrapyard.id}
-                                            </th>
-                                            <td style={{fontSize:'12px'}}>
+                                           
+                                            <td style={{fontSize:'12px'}}  scope="row"  >
                                                 {scrapyard.name}
                                             </td>
                                             <td style={{fontSize:'12px'}}>
@@ -245,7 +237,7 @@ export default function FindScrapyard({ userData }) {
                                         <h7>Địa chỉ: <span>{User.address}</span></h7> <br></br>
                                         <h7>Thời gian mở: <span>{User.open_time}</span></h7> <br></br>
                                     <button style={mybutton} onClick={(e)=>{findscrapyarder(User.user_id)}}>Xem thông tin của chủ vựa</button>   
-  end                                      {Scrapyarder ? 
+                                      {Scrapyarder ? 
                                         <>
                                         <br></br>
                                        

@@ -128,9 +128,7 @@ export default function FindBuyer({ userData }) {
                         <Table hover style={{ marginTop: '20px' }}>
                             <thead>
                                 <tr>
-                                    <th>
-                                        ID
-                                    </th>
+                                    
                                     <th>
                                         Name
                                     </th>
@@ -146,10 +144,8 @@ export default function FindBuyer({ userData }) {
                                 {filteredUsers ? filteredUsers.map(buyer =>
 
                                     <tr key={buyer.id} onClick={(e) => { handleBuyer(buyer) }}>
-                                        <th scope="row"   >
-                                            {buyer.id}
-                                        </th>
-                                        <td>
+                                       
+                                        <td scope="row" >
                                             {buyer.fullname}
                                         </td>
                                         <td>
@@ -169,9 +165,7 @@ export default function FindBuyer({ userData }) {
                     <Table hover className="table-all" style={{ marginTop: '20px', visibility: 'hidden' }}>
                         <thead>
                             <tr>
-                                <th>
-                                    ID
-                                </th>
+                               
                                 <th>
                                     Name
                                 </th>
@@ -190,10 +184,8 @@ export default function FindBuyer({ userData }) {
                                 return (
                                     <>
                                         <tr key={index} onClick={(e) => { handleBuyer(buyer) }}>
-                                            <th scope="row"   >
-                                                {buyer.id}
-                                            </th>
-                                            <td>
+                                            
+                                            <td scope="row" >
                                                 {buyer.fullname}
                                             </td>
                                             <td>

@@ -14,7 +14,7 @@ import {  faPhoneVolume, faComments, faEnvelope, faMapLocationDot, faUser , faFa
 
 import { pages } from '@/utils/contanst'
 
-import { Container } from 'reactstrap';
+import { Container , Toast, ToastHeader, ToastBody } from 'reactstrap';
 
 
 export async function getServerSideProps({ req, res, params }) {
@@ -37,23 +37,25 @@ export async function getServerSideProps({ req, res, params }) {
   }
 
 export default function Approve({userData}){
-    
+  const [showA, setShowA] = useState(false);
     const [email,setEmail] =useState(userData[0].email);
     const [password,setPassword] =useState(null);
     const [userid,setId]=useState(userData[0].id);
      const [rePassword,setRepassword] = useState(null)
     console.log('uaserr',email)
     const [Error,setError]=useState(null);
+    const toggleShowA = () => setShowA(!showA);
     const resetPassword=()=>{
 
-        if(password.password !== rePassword.rePassword){
+        if(password.password != rePassword.rePassword){
 
           console.log('khac')
           console.log(password)
           console.log(rePassword)
             setError('Mật khẩu nhập lại không khớp')
+            setShowA(!showA);
         }
-        if(password.password === rePassword.rePassword){
+        if(password.password == rePassword.rePassword){
           console.log('giong')
             axios.post(`/api/setpassword/`,{ ...password, id: userid  })
             window.location.replace('/login')
@@ -66,13 +68,19 @@ useEffect(()=>{
 
 return(
     <>
-    <p>{Error}</p>
- 
+
 
   <div className="mainDiv">
   <div className="cardStyle">
     <div >
-      
+    <Toast isOpen={showA} style={{marginLeft:'30px'}} >
+                  <ToastHeader icon="danger" toggle={toggleShowA}>
+                    Danger !!
+                  </ToastHeader>
+                  <ToastBody>
+                    {Error}
+                  </ToastBody>
+                </Toast>
      
       
       <h2 className="formTitle">

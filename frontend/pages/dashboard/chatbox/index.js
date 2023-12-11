@@ -97,7 +97,7 @@ function App({ userData }) {
 				  }
 				}
 			  });
-		}, 500)
+		}, 1500)
 		getMessageByUser({ userId: userData.id, role: userData.name }).then(() => {
 			// Check Query params
 			triggerGetDataByParam()

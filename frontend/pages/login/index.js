@@ -117,10 +117,13 @@ export default function Home({ data }) {
               />
 
             </Col>
-            {Error ?
+           
+            <Col style={{ marginTop: '78px' }}>
+              <Card className={styles.loginBlock} style={{ width: '400px', height: '472px', padding: '30px' }}>
+              {Error ?
               <div>
                 <Toast isOpen={showA}  >
-                  <ToastHeader icon="primary" toggle={toggleShowA}>
+                  <ToastHeader icon="danger" toggle={toggleShowA}>
                     Information !!
                   </ToastHeader>
                   <ToastBody>
@@ -129,8 +132,6 @@ export default function Home({ data }) {
                 </Toast>
               </div>
               : null}
-            <Col style={{ marginTop: '78px' }}>
-              <Card className={styles.loginBlock} style={{ width: '400px', height: '472px', padding: '30px' }}>
                 <CardTitle tag="h4" style={{ textAlign: 'center' }}>
                   <span className={styles.cardTitle}>Đăng nhập</span>  </CardTitle>
                 <div className={styles.inputLogin}>
@@ -159,7 +160,7 @@ export default function Home({ data }) {
                   />
                 </div>
                 <NavLink style={{ paddingTop: '15px', paddingBottom: '15px' }}>
-                  {/* <Link href="/"> Không có tài khoản? Hãy Đăng ký</Link> */}
+                <Link  href={`/setpassword/verify`} >Quên mật khẩu ?</Link> 
                 </NavLink>
                 <Button className={styles.btnLogin}
                   size="lg"
