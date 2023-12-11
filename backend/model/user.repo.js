@@ -45,6 +45,16 @@ class UserModel {
                 })
         })
     }
+    static updateUser = async ({  password,  id }) => {
+        return new Promise((resolve, reject) => {
+            con.query('UPDATE users SET password = ? WHERE id = ? '
+                , [password, id],
+                function (error, results) {
+                    if (error) reject(error)
+                    resolve(results)
+                })
+        })
+    }
     static getUserByEmail=async(email)=>{
         return new Promise((resolve,reject)=>{
             con.query('SELECT * FROM users WHERE email =?',[email],

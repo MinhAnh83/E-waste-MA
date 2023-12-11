@@ -30,7 +30,7 @@ class MailHelper {
         })
         return transport
     }
-    static sendMail = async ({ from = '"E-WASTE Service 👻" ewastewebsite832@gmail.com',
+    static sendMail = async ({ from = 'tranluanhxxx@gmail.com',
         to, subject, text, html }) => {
         const transporter = await MailHelper.getTransport()
         const info = transporter.sendMail({

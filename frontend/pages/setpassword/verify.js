@@ -65,11 +65,14 @@ const getUser=()=>{
         console.log('lay id nha', response.id)
         sendmail.to = response.email
         sendmail.html = `
-        <a src="http://localhost:3000/setpassword/${response.id}">Chap nhan</a>
+        Hello ${response.email} !
+      This is a link to reset the password http://localhost:3000/setpassword/${response.id}
         `
         sendmail.subject = `Người mua `
-        // axios.post('/api/mail', { ...sendmail })
-        console.log(111)
+         axios.post('/api/mail', { ...sendmail }).then(()=>{
+          console.log(111)
+
+         })
         setSuccess('Đã gửi mail thành công. Mời bạn vào gmail để xác nhận.')
         setShowB(!showB);
         console.log(222)

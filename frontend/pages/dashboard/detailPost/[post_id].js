@@ -73,7 +73,7 @@ export default function DetailPost({ userData }) {
     sendmail.to = User[0].email
     sendmail.html = `<h3>Tôi muốn mua </h3>
 <p>Hãy liên lạc với tôi dưa trên các thông tin này</p>
-  <a src="http://localhost:3000/user/info/${id}">Link thông tin</a>
+Link thông tin  http://localhost:3000/user/info/${id}   
   `
     sendmail.subject = `Người mua ${id} muốn mua sản phẩm`
     axios.post('/api/mail', { ...sendmail })

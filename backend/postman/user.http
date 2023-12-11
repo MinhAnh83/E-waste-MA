@@ -30,3 +30,28 @@ content-type: application/json
    "id": 3
     
 }
+
+### POST edit user
+POST http://localhost:8000/api/user/verify
+Content-Type: application/json
+
+{
+    "email": "minhngoc@gmail.com"
+}
+
+### POST edit user
+POST http://localhost:3000/api/verifyemail
+Content-Type: application/json
+
+{
+    "email": "minhngoc@gmail.com"
+}
+
+### POST edit user
+POST http://localhost:3000/api/setpassword
+Content-Type: application/json
+
+{
+    "password": "1234",
+    "id":4
+}
