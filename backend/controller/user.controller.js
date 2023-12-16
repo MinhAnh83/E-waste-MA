@@ -9,21 +9,21 @@ class UserController {
     static signUp = async (req, res, next) => {
         try {
             // 1.
-            const {  fullname, email, password , phonenumber, address, role_id} = req.body
-            if(!password || !email || !fullname || !phonenumber || !role_id) throw new Error('Inputs are not valid!!')
+            const { fullname, email, password, phonenumber, address, role_id } = req.body
+            if (!password || !email || !fullname || !phonenumber || !role_id) throw new Error('Inputs are not valid!!')
             // 2.
             const foundUser = await UserModel.getUserByEmail(email)
-            if(foundUser) throw new Error(`User existing`)
+            if (foundUser) throw new Error(`User existing`)
             // 3.
             const passwordCipher = CryptoJS.AES.encrypt(password, SECRECT_KEY).toString();
             // 4.
-            const results = await UserModel.createUser({ 
-                email: email, 
-                fullname: fullname, 
-                password: passwordCipher, 
-                phonenumber: phonenumber, 
-                address: address, 
-                role_id:role_id
+            const results = await UserModel.createUser({
+                email: email,
+                fullname: fullname,
+                password: passwordCipher,
+                phonenumber: phonenumber,
+                address: address,
+                role_id: role_id
             })
             console.log(2)
             res.status(200).json({
@@ -42,8 +42,8 @@ class UserController {
 
     static getUsers = async (req, res, next) => {
         try {
-
-            const results = await UserModel.getUser()
+            const { user_id } = req.query;
+            const results = await UserModel.getUser({ user_id })
             // console.log(results)
             if (!results) throw new Error("Don't have data");
             res.status(200).json({
@@ -66,22 +66,22 @@ class UserController {
     static createUser = async (req, res, next) => {
         try {
             const { email, password, fullname, phonenumer, address, image } = req.body;
-            const {RoleID} =req.body
+            const { RoleID } = req.body
             const result = await UserModel.create({
 
                 email: email
                 , password: password
                 , fullname: fullname
-                , phonenumer:phonenumer
+                , phonenumer: phonenumer
                 , address: address
                 , image: image,
-                RoleID:RoleID
+                RoleID: RoleID
             })
             if (!result) throw new Error("Can't create User");
             res.status(200).json({
                 message: 'Create Users success!',
                 data: result
-                  
+
             })
 
 
@@ -97,20 +97,19 @@ class UserController {
 
     static editUser = async (req, res, next) => {
         try {
-            const {  email, password, fullname, phonenumer, address, image } = req.body;
-            const { UserId } = req.query
+            const { email, fullname, phonenumber, address, image, id } = req.body;
+            // const { id } = req.query
             const result = await UserModel.editUser({
                 email: email
-                , password: password
                 , fullname: fullname
-                , phonenumer:phonenumer
+                , phonenumber: phonenumber
                 , address: address
                 , image: image,
-                  id: UserId
+                id: id
             })
             if (!result) throw new Error("Can't create User");
             res.status(200).json({
-                message: 'Create Users success!',
+                message: 'Edit Users success!',
                 data: result
             })
 
@@ -140,17 +139,17 @@ class UserController {
             // 1.
             const foundUser = await UserModel.getUserByEmail(email)
             // 2.
-            if(!foundUser) throw new Error('User not exist!')
+            if (!foundUser) throw new Error('User not exist!')
             // 3.
             const bytes = CryptoJS.AES.decrypt(foundUser.password, SECRECT_KEY)
             const passwordText = bytes.toString(CryptoJS.enc.Utf8)
             // 4.
-            if(password !== passwordText) throw new Error('Password not match')
+            if (password !== passwordText) throw new Error('Password not match')
             // 5.
             const token = await JWT.sign({ id: foundUser.id, email: foundUser.email }, SECRECT_KEY, { expiresIn: '12h' })
             // 6.
             const updateResult = await UserModel.updateToken({ id: foundUser.id, token: token })
-            if(!updateResult) throw new Error('Update token fail')
+            if (!updateResult) throw new Error('Update token fail')
             // 7.
             res.status(200).json({
                 code: 200,
@@ -161,7 +160,7 @@ class UserController {
                 }
             })
 
-        } catch(err) {
+        } catch (err) {
             res.status(500).json({
                 code: 500,
                 message: 'Error:::',
@@ -170,16 +169,65 @@ class UserController {
         }
     }
 
-  
+    static verifyEmail = async (req, res, next) => {
+        try {
+            const { email } = req.body;
+            // 1.
+            const foundUser = await UserModel.getUserByEmail(email);
+            // 2.
+            if (!foundUser) throw new Error('User not exist!')
+            // 3.
+
+            res.status(200).json({
+                code: 200,
+                message: 'Login Ok!!!',
+                data: {
+                    result: foundUser,
+
+                }
+            })
+
+        } catch (err) {
+            res.status(500).json({
+                code: 500,
+                message: 'Error:::',
+                error: err
+            })
+        }
+    }
+
+    static setPassword = async (req, res, next) => {
+        try {
+            const { password, id } = req.body;
+            const passwordCipher = CryptoJS.AES.encrypt(password, SECRECT_KEY).toString();
+            const results = await UserModel.updateUser({
+                password: passwordCipher,
+                id: id
+            })
+            res.status(200).json({
+                code: 200,
+                message: 'set Password success',
+                data: results
+            })
+        }
+        catch (error) {
+            res.status(500).json({
+                code: 500,
+                message: 'set Password failed',
+                error: err
+            })
+        }
+    }
+
 
     static authenCustomer = async (req, res, next) => {
         const userId = req.headers["user-id"]
         const userEmail = req.headers["user-email"]
         console.log(req.headers["user-id"])
-        const userRole =req.headers["user-role"]
-        
+        const userRole = req.headers["user-role"]
+
         res.json({
-            userId, userEmail,userRole
+            userId, userEmail, userRole
         })
     }
     static getUserWithRole = async (req, res, next) => {
@@ -187,6 +235,10 @@ class UserController {
         // const customerEmail = req.headers["customer-email"]
         // const customerRole =req.headers["customer-role"]
         const result = await UserModel.getUserWithRole(parseInt(userId))
+        res.json(result)
+    }
+    static getAllUserWithRole = async (req, res, next) => {
+        const result = await UserModel.getAllUserWithRole()
         res.json(result)
     }
 }

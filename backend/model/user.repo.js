@@ -16,19 +16,39 @@ class UserModel {
                 })
         })
     }
-    static getUser = async () => {
+    static getAllUserWithRole =async()=>{
         return new Promise((resolve, reject) => {
-            con.query('SELECT * FROM users', function (error, results, fields) {
+             con.query("SELECT * FROM users INNER JOIN roles ON users.role_id = roles.role_id", function(error, results, fields){
+                 if(error) reject(error)
+                 resolve(results)
+             })
+         })
+     }
+    static getUser = async ({user_id}) => {
+        return new Promise((resolve, reject) => {
+            let query ='SELECT * FROM users INNER JOIN roles ON users.role_id = roles.role_id'
+            if(user_id) query = query + ` WHERE id=${user_id}`
+            con.query(query, function (error, results, fields) {
                 if (error) reject(error)
 
                 resolve(results)
             })
         })
     }
-    static editUser = async ({ email, password, fullname, phonenumer, address, image, id }) => {
+    static editUser = async ({ email, password, fullname, phonenumber, address, image, id }) => {
         return new Promise((resolve, reject) => {
-            con.query('UPDATE users SET email = ?,password = ?, fullname =?, phonenumber =?, address =?, image=? WHERE id = ? '
-                , [email, password, fullname, phonenumer, address, image, id],
+            con.query('UPDATE users SET email = ?, fullname =?, phonenumber =?, address =?, image=? WHERE id = ? '
+                , [email, fullname, phonenumber, address, image, id],
+                function (error, results) {
+                    if (error) reject(error)
+                    resolve(results)
+                })
+        })
+    }
+    static updateUser = async ({  password,  id }) => {
+        return new Promise((resolve, reject) => {
+            con.query('UPDATE users SET password = ? WHERE id = ? '
+                , [password, id],
                 function (error, results) {
                     if (error) reject(error)
                     resolve(results)

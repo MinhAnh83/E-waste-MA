@@ -5,6 +5,7 @@ import { faCoffee, faSun, faMoon } from '@fortawesome/free-solid-svg-icons'
 import { useState, useEffect } from 'react'
 import React from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 
@@ -12,10 +13,11 @@ export default function Layout({ pages = [], user = {}, children }) {
     const [modal, setModal] = useState(false);
     const [navs, setNavs] = useState(pages)
     const toggle = () => setModal(!modal);
-    console.log('hello',user)
+    console.log('hello', user)
 
     useEffect(() => {
         setNavs(pages)
+        console.log(navs)
     }, [pages])
     const handelLogout = () => {
         setCookie('vechaitoken', '')
@@ -41,14 +43,14 @@ export default function Layout({ pages = [], user = {}, children }) {
 
                     <div className="side-nav">
 
-                        {navs.map((nav, index) => {
+                        {navs && navs.map((nav, index) => {
                             return (
 
                                 <div className="menu-item flex " key={index}>
                                     <Link href={nav.href}>
                                         <div className="icon">
                                             {nav.icon}
-                                            <p style={{ fontSize: '20px' }}>{nav.name}</p>
+                                            <p style={{ fontSize: '17px' }}>{nav.name}</p>
                                         </div>
 
                                     </Link>
@@ -65,7 +67,7 @@ export default function Layout({ pages = [], user = {}, children }) {
                                 <ion-icon name="log-out-outline"></ion-icon>
                             </div>
 
-                            <p>Logout</p>
+                            <p>Đăng xuất</p>
                         </div>
                     </div>
                 </div>
@@ -75,7 +77,7 @@ export default function Layout({ pages = [], user = {}, children }) {
                             <div className="icon">
                                 <ion-icon name="search-outline"></ion-icon>
                             </div>
-                            <input type="text" placeholder=" Search any collection" />
+                            <input type="text" placeholder=" Tìm kiếm " />
                         </div>
 
                         <div className="theme flex">
@@ -94,9 +96,13 @@ export default function Layout({ pages = [], user = {}, children }) {
                         </div>
 
                         <div className="user flex flex-sb" onClick={toggle}>
-                            <img
+                            <Image
+                              loader={() => { return user.image || "https://via.placeholder.com/100x100" }}
                                 src="https://raw.githubusercontent.com/programmercloud/nft-dashboard/main/img/user.png"
                                 alt=""
+                                width={24}
+                                height={20}
+                                style={{borderRadius:'50%', border:'1px solid gray'}}
                             />
                             <p>{user.fullname}</p>
                             <ion-icon name="chevron-down-outline"></ion-icon>
@@ -110,15 +116,18 @@ export default function Layout({ pages = [], user = {}, children }) {
             <Modal isOpen={modal} toggle={toggle} >
                 <ModalHeader toggle={toggle}>Profile</ModalHeader>
                 <ModalBody>
-                  <h4>Hello {user.fullname} !</h4>
-                  <p>Email: {user.email}</p>
-                  
+                    <h4>Xin chào {user.fullname} !</h4>
+                    <p>Email: {user.email}</p>
+
                 </ModalBody>
                 <ModalFooter>
-               
-                    <Button color="secondary" onClick={toggle}>
-                        Fix profile
-                    </Button>
+
+                    <Link href='/dashboard/profile'>
+                        <div className="profile_button_fix" >
+                          
+                            <p style={{ fontSize: '20px', marginTop: '10px', fontSize: "14px"}}>Sửa profile</p>
+                        </div>
+                    </Link>
                 </ModalFooter>
             </Modal>
 

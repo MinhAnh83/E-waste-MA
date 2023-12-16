@@ -1,0 +1,10 @@
+### Post Mail
+POST  http://localhost:8000/api/mail/create
+content-type: application/json
+
+{ 
+ "to": "tranluanhxxx@gmail.com", 
+ "subject": "Hello",
+  "text":"Xin chao ban",
+   "html":"<h2> Chao xin</h2>" 
+}

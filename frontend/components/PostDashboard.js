@@ -1,6 +1,7 @@
 import axios from "axios";
 import Image from "next/image";
 import { useEffect, useState } from 'react'
+import Link from "next/link";
 export default function PostDashboard({ posts }) {
     const [data, setData] = useState(posts)
     useEffect(() => {
@@ -29,40 +30,52 @@ export default function PostDashboard({ posts }) {
         <>
             <div className="nfts">
                 <div className="trending heading flex flex-sb " style={{ marginTop: "20px" }}>
-                    <h2>Some Posts</h2>
+                    <h2>Các bài đăng gần đây nhất</h2>
                 </div>
 
                 {/* <!-- =====Browse NFT===== --> */}
                 <div className="browse">
 
                     {data.map((post, index) => {
+
                         return (
+                          <>
+                          {post && post.is_deleted===0 ? 
+                            <div className="nft" key={index} style={{width:'350px'}}>
 
-                            <div className="nft" key={index}>
+                            <div>
+                                <Image
+                                    loader={() => { return post.image || "https://via.placeholder.com/100x100" }}
+                                    src="https://via.placeholder.com/100x100"
+                                    width={268}
+                                    height={254}
+                                    alt="Picture of the author"
+                                />
 
-                                <div >
-                                    <Image
-                                        loader={() => { return post.image || "https://via.placeholder.com/100x100" }}
-                                        src="https://via.placeholder.com/100x100"
-                                        width={268}
-                                        height={254}
-                                        alt="Picture of the author"
-                                    />
+                                <div className="title">{post.name}</div>
+                                <Link  href={`/dashboard/detailPost/${post.post_id}`} style={{ textDecoration: 'underline', marginTop: '7px', fontSize: '15px', color: '#77cdff' }}>Xem chi tiết</Link>
+                                <div className="details flex flex-sb" style={{ marginTop: '7px' }}>
+                                    <div className="author flex">
+                                        <img
+                                            src="https://raw.githubusercontent.com/programmercloud/nft-dashboard/main/img/user.png"
+                                            alt=""
+                                        />
 
-                                    <div className="title">{post.name}</div>
-                                    <div className="details flex flex-sb">
-                                        <div className="author flex">
-                                            <img
-                                                src="https://raw.githubusercontent.com/programmercloud/nft-dashboard/main/img/user.png"
-                                                alt=""
-                                            />
-                                            <p>{post.fullname}</p>
-                                        </div>
-                                        <div className="price" style={{ fontSize: '10px' }}>{formatMoney(post.expect_price, 0) || 'Thương lượng'}</div>
+                                        <p>{post.fullname}</p>
+
                                     </div>
+                                    <div className="price" style={{ fontSize: '10px' }}>{formatMoney(post.expect_price, 0) || 'Thương lượng'}</div> <hr />
+
+
                                 </div>
 
                             </div>
+
+                        </div>: null
+                        }
+                        
+                          </>
+                           
 
 
 
